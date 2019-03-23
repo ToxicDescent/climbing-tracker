@@ -15,34 +15,55 @@ const CLIMBING_GRADES = {
 };
 
 export default function Tracker() {
-  const [climbs, setClimbs] = useState(() => {
+  // State
+  const [completedClimbs, setCompletedClimbs] = useState(() => {
     const initialState = {};
     Object.keys(CLIMBING_GRADES).forEach(key => {
       initialState[key] = 0;
     })
     return initialState;
   });
-  const [climbingGrade, setClimbingGrade] = useState('vb');
+  const [attemptedClimbs, setAttemptedClimbs] = useState(() => {
+    const initialState = {};
+    Object.keys(CLIMBING_GRADES).forEach(key => {
+      initialState[key] = 0;
+    })
+    return initialState;
+  });
+  const [grade, setGrade] = useState('vb');
+  const [status, setStatus] = useState('completed');
 
-  function updateClimbingGrade(event) {
-    setClimbingGrade(event.target.value);
+  // Functions
+  const onGradeChange = event => {
+    setGrade(event.target.value);
   }
-
-  function submitClimb(event) {
-    setClimbs({
-      ...climbs,
-      [climbingGrade]: climbs[climbingGrade] ? climbs[climbingGrade] + 1 : 1,
-    });
+  const onStatusChange = event => {
+    setStatus(event.target.value);
+  }
+  const submitClimb = event => {
     event.preventDefault();
+    if (status === 'completed') {
+      setCompletedClimbs({
+        ...completedClimbs,
+        [grade]: completedClimbs[grade] ? completedClimbs[grade] + 1 : 1,
+      });
+    } else if (status === 'attempted'){
+      setAttemptedClimbs({
+        ...attemptedClimbs,
+        [grade]: attemptedClimbs[grade] ? attemptedClimbs[grade] + 1 : 1,
+      });
+    }
   }
 
+  // Render
   return (
     <Fragment>
       <table>
         <thead>
           <tr>
+            <th></th>
             {
-              Object.keys(climbs).map(key => (
+              Object.keys(CLIMBING_GRADES).map(key => (
                 <th key={key}>{CLIMBING_GRADES[key]}</th>
               ))
             }
@@ -50,9 +71,18 @@ export default function Tracker() {
         </thead>
         <tbody>
           <tr>
+            <th>Completed</th>
             {
-              Object.keys(climbs).map(key => (
-                <td key={key}>{climbs[key]}</td>
+              Object.keys(CLIMBING_GRADES).map(key => (
+                <td key={key}>{completedClimbs[key]}</td>
+              ))
+            }
+          </tr>
+          <tr>
+            <th>Attempted</th>
+            {
+              Object.keys(CLIMBING_GRADES).map(key => (
+                <td key={key}>{attemptedClimbs[key]}</td>
               ))
             }
           </tr>
@@ -62,7 +92,7 @@ export default function Tracker() {
         <h2>Record Climb</h2>
         <label>
           Grade:
-          <select value={climbingGrade} onChange={updateClimbingGrade}>
+          <select value={grade} onChange={onGradeChange}>
             {
               Object.keys(CLIMBING_GRADES).map(key => (
                 <option key={key} value={key}>{CLIMBING_GRADES[key]}</option>
@@ -70,6 +100,18 @@ export default function Tracker() {
             }
           </select>
         </label>
+        <input
+          type="radio"
+          name="climbStatus"
+          value="completed"
+          checked={status === 'completed'}
+          onChange={onStatusChange}/>Completed
+        <input
+          type="radio"
+          name="climbStatus"
+          value="attempted"
+          checked={status === 'attempted'}
+          onChange={onStatusChange}/>Attempted
         <input type="submit" value="Record Climb" />
       </form>
     </Fragment>
