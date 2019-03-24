@@ -1,15 +1,20 @@
 import React, { Fragment, useState, useEffect } from 'react';
 
-export default function Timer() {
+export default function Timer({ sessionStarted }) {
   // State
-  const [sessionStarted, setSessionStarted] = useState(false);
   const [startTime, setStartTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [timerId, setTimerId] = useState(null);
   
   useEffect(() => {
+    if (sessionStarted && !timerId) {
+      setStartTime(new Date().getTime());
+      setCurrentTime(new Date().getTime());
+      setTimerId(setInterval(onTick, 1000));
+    }
+
     return () => clearInterval(timerId);
-  }, [timerId]);
+  }, [timerId, sessionStarted]);
 
   // Functions
   const onTick = () => {
@@ -30,7 +35,6 @@ export default function Timer() {
   return (
     <Fragment>
       <p>{new Date(currentTime - startTime).toISOString().substr(11, 8)}</p>
-      <button onClick={onStartEndSession}>{sessionStarted ? 'End Session' : 'Start Session'}</button>
     </Fragment>
   )
 }
