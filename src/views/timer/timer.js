@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import Typography from '@material-ui/core/Typography';
 
 export default function Timer({ sessionStarted }) {
   // State
@@ -34,7 +35,7 @@ export default function Timer({ sessionStarted }) {
   // Render
   return (
     <Fragment>
-      <p>{new Date(currentTime - startTime).toISOString().substr(11, 8)}</p>
+      <Typography variant="body1">{new Date(currentTime - startTime).toISOString().substr(11, 8)}</Typography>
     </Fragment>
   )
 }

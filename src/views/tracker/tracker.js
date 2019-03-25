@@ -1,4 +1,16 @@
 import React, { Fragment, useState } from 'react';
+import Typography from '@material-ui/core/Typography';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableBody from '@material-ui/core/TableBody';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
 
 const CLIMBING_GRADES = {
   vb: 'VB',
@@ -40,7 +52,7 @@ export default function Tracker() {
   const onStatusChange = event => {
     setStatus(event.target.value);
   }
-  const submitClimb = event => {
+  const onRecordClimb = event => {
     event.preventDefault();
     if (status === 'completed') {
       setCompletedClimbs({
@@ -58,68 +70,62 @@ export default function Tracker() {
   // Render
   return (
     <Fragment>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell></TableCell>
             {
               Object.keys(CLIMBING_GRADES).map(key => (
-                <th key={key}>{CLIMBING_GRADES[key]}</th>
+                <TableCell key={key} align="centre">{CLIMBING_GRADES[key]}</TableCell>
               ))
             }
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>Completed</th>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>Completed</TableCell>
             {
               Object.keys(CLIMBING_GRADES).map(key => (
-                <td key={key}>{completedClimbs[key]}</td>
+                <TableCell key={key}>{completedClimbs[key]}</TableCell>
               ))
             }
-          </tr>
-          <tr>
-            <th>Attempted</th>
+          </TableRow>
+          <TableRow>
+            <TableCell>Attempted</TableCell>
             {
               Object.keys(CLIMBING_GRADES).map(key => (
-                <td key={key}>{attemptedClimbs[key]}</td>
+                <TableCell key={key}>{attemptedClimbs[key]}</TableCell>
               ))
             }
-          </tr>
-        </tbody>
-      </table>
-      <form onSubmit={submitClimb}>
-        <h2>Record Climb</h2>
-        <label>
-          Grade:
-          <select value={grade} onChange={onGradeChange}>
-            {
-              Object.keys(CLIMBING_GRADES).map(key => (
-                <option key={key} value={key}>{CLIMBING_GRADES[key]}</option>
-              ))
-            }
-          </select>
-        </label>
-        <label>
-          Completed
-          <input
-            type="radio"
-            name="climbStatus"
-            value="completed"
-            checked={status === 'completed'}
-            onChange={onStatusChange} />
-        </label>
-        <label>
-          Attempted
-          <input
-            type="radio"
-            name="climbStatus"
-            value="attempted"
-            checked={status === 'attempted'}
-            onChange={onStatusChange} />
-        </label>
-        <input type="submit" value="Record Climb" />
-      </form>
+          </TableRow>
+        </TableBody>
+      </Table>
+      <Typography variant="h2">Record Climb</Typography>
+      <InputLabel>Grade:</InputLabel>
+      <NativeSelect 
+        value={grade}
+        onChange={onGradeChange}>
+        {
+          Object.keys(CLIMBING_GRADES).map(key => (
+            <option key={key} value={key}>{CLIMBING_GRADES[key]}</option>
+          ))
+        }
+      </NativeSelect >
+      <RadioGroup
+        aria-label="Climb status"
+        name="climbStatus"
+        row
+        value={status}
+        onChange={onStatusChange}>
+        <FormControlLabel value="completed" control={<Radio color="primary" />} label="Completed" />
+        <FormControlLabel value="attempted" control={<Radio color="secondary" />} label="Attempted" />
+      </RadioGroup>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={onRecordClimb}>
+        Record climb
+      </Button>
     </Fragment>
   );
 }

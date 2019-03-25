@@ -1,4 +1,10 @@
 import React, { Fragment, useState } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
 
 import Timer from '../timer/timer';
 import Tracker from '../tracker/tracker';
@@ -19,38 +25,38 @@ export default function App() {
 
   return (
     <Fragment>
-      <h1>Climbing Tracker</h1>
+      <CssBaseline />
+      <Typography variant="h1">Climbing Tracker</Typography>
       {
         !sessionStarted &&
         <Fragment>
-          <label>
-            Indoor
-            <input
-              type="radio"
-              name="sessionLocation"
-              value="indoor"
-              checked={sessionLocation === 'indoor'}
-              onChange={onSessionLocationChange} />
-          </label>
-          <label>
-            Outdoor
-            <input
-              type="radio"
-              name="sessionLocation"
-              value="outdoor"
-              checked={sessionLocation === 'outdoor'}
-              onChange={onSessionLocationChange} />
-          </label>
-          <button onClick={onStartSession}>Start Session</button>
+          <RadioGroup
+            aria-label="Session location"
+            name="sessionLocation"
+            row
+            value={sessionLocation}
+            onChange={onSessionLocationChange}>
+            <FormControlLabel value="indoor" control={<Radio color="primary" />} label="Indoor" />
+            <FormControlLabel value="outdoor" control={<Radio color="secondary" />} label="Outdoor" />
+          </RadioGroup>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={onStartSession}>
+            Start Session
+          </Button>
         </Fragment>
       }
+      <Timer sessionStarted={sessionStarted} />
+      <Tracker />
       {
         sessionStarted &&
-        <Fragment>
-          <Timer sessionStarted={sessionStarted} />
-          <Tracker />
-          <button onClick={onEndSession}>End Session</button>
-        </Fragment>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={onEndSession}>
+          End Session
+        </Button>
       }
     </Fragment>
   );
