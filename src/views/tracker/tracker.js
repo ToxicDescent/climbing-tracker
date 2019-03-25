@@ -100,18 +100,24 @@ export default function Tracker() {
             }
           </select>
         </label>
-        <input
-          type="radio"
-          name="climbStatus"
-          value="completed"
-          checked={status === 'completed'}
-          onChange={onStatusChange}/>Completed
-        <input
-          type="radio"
-          name="climbStatus"
-          value="attempted"
-          checked={status === 'attempted'}
-          onChange={onStatusChange}/>Attempted
+        <label>
+          Completed
+          <input
+            type="radio"
+            name="climbStatus"
+            value="completed"
+            checked={status === 'completed'}
+            onChange={onStatusChange} />
+        </label>
+        <label>
+          Attempted
+          <input
+            type="radio"
+            name="climbStatus"
+            value="attempted"
+            checked={status === 'attempted'}
+            onChange={onStatusChange} />
+        </label>
         <input type="submit" value="Record Climb" />
       </form>
     </Fragment>

@@ -5,6 +5,7 @@ import Tracker from '../tracker/tracker';
 
 export default function App() {
   const [sessionStarted, setSessionStarted] = useState(false);
+  const [sessionLocation, setSessionLocation] = useState('indoor');
 
   const onStartSession = () => {
     setSessionStarted(true);
@@ -12,13 +13,36 @@ export default function App() {
   const onEndSession = () => {
     setSessionStarted(false);
   }
+  const onSessionLocationChange = event => {
+    setSessionLocation(event.target.value);
+  }
 
   return (
     <Fragment>
       <h1>Climbing Tracker</h1>
       {
         !sessionStarted &&
-        <button onClick={onStartSession}>Start Session</button>
+        <Fragment>
+          <label>
+            Indoor
+            <input
+              type="radio"
+              name="sessionLocation"
+              value="indoor"
+              checked={sessionLocation === 'indoor'}
+              onChange={onSessionLocationChange} />
+          </label>
+          <label>
+            Outdoor
+            <input
+              type="radio"
+              name="sessionLocation"
+              value="outdoor"
+              checked={sessionLocation === 'outdoor'}
+              onChange={onSessionLocationChange} />
+          </label>
+          <button onClick={onStartSession}>Start Session</button>
+        </Fragment>
       }
       {
         sessionStarted &&
