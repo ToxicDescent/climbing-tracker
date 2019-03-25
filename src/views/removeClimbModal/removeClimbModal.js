@@ -10,14 +10,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import Button from '@material-ui/core/Button';
 
-import CLIMBING_GRADES from '../../utility/constants';
+import { CLIMBING_GRADES } from '../../utility/constants';
 
-export default function RecordClimbModal({
+export default function RemoveClimbModal({
   grade,
   onGradeChange,
   status,
   onStatusChange,
-  onRecordClimb,
+  onRemoveClimb,
 }) {
   // State
   const [openDialog, setOpenDialog] = useState(false);
@@ -28,7 +28,10 @@ export default function RecordClimbModal({
   };
   const onCloseDialog = () => {
     setOpenDialog(false);
-    onRecordClimb();
+  }
+  const onCloseAndRemoveDialog = () => {
+    setOpenDialog(false);
+    onRemoveClimb();
   }
 
   // Render
@@ -36,14 +39,16 @@ export default function RecordClimbModal({
     <Fragment>
       <Button
         variant="contained"
-        color="primary"
+        color="secondary"
         onClick={onOpenDialog}>
-        Record climb
+        Remove Climb
       </Button>
       <Dialog
+        fullWidth
+        maxWidth="sm"
         open={openDialog}
         onClose={onCloseDialog}>
-        <DialogTitle>Record Climb</DialogTitle>
+        <DialogTitle>Remove Climb</DialogTitle>
         <DialogContent>
           <InputLabel>Grade:</InputLabel>
           <NativeSelect 
@@ -56,21 +61,28 @@ export default function RecordClimbModal({
             }
           </NativeSelect >
           <RadioGroup
-            aria-label="Climb status"
-            name="climbStatus"
             row
+            name="climbStatus"
+            aria-label="Climb status"
             value={status}
             onChange={onStatusChange}>
+            <FormControlLabel value="flashed" control={<Radio color="primary" />} label="Flashed" />
             <FormControlLabel value="completed" control={<Radio color="primary" />} label="Completed" />
-            <FormControlLabel value="attempted" control={<Radio color="secondary" />} label="Attempted" />
+            <FormControlLabel value="attempted" control={<Radio color="primary" />} label="Attempted" />
           </RadioGroup>
         </DialogContent>
         <DialogActions>
+        <Button
+            variant="contained"
+            color="secondary"
+            onClick={onCloseDialog}>
+            Cancel
+          </Button>
           <Button
             variant="contained"
             color="primary"
-            onClick={onCloseDialog}>
-            Record climb
+            onClick={onCloseAndRemoveDialog}>
+            Remove Climb
           </Button>
         </DialogActions>
       </Dialog>

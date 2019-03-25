@@ -1,4 +1,4 @@
-const CLIMBING_GRADES = {
+export const CLIMBING_GRADES = {
   vb: 'VB',
   v0: 'V0',
   v1: 'V1',

@@ -1,16 +1,23 @@
 import React, { Fragment, useState } from 'react';
-import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-import RecordClimbModal from '../recordClimbModal/recordClimbModal';
-import CLIMBING_GRADES from '../../utility/constants';
+import AddClimbModal from '../addClimbModal/addClimbModal';
+import RemoveClimbModal from '../removeClimbModal/removeClimbModal';
+import { CLIMBING_GRADES } from '../../utility/constants';
 
 export default function Tracker() {
   // State
+  const [flashedClimbs, setFlashedClimbs] = useState(() => {
+    const initialState = {};
+    Object.keys(CLIMBING_GRADES).forEach(key => {
+      initialState[key] = 0;
+    })
+    return initialState;
+  });
   const [completedClimbs, setCompletedClimbs] = useState(() => {
     const initialState = {};
     Object.keys(CLIMBING_GRADES).forEach(key => {
@@ -26,7 +33,7 @@ export default function Tracker() {
     return initialState;
   });
   const [grade, setGrade] = useState('vb');
-  const [status, setStatus] = useState('completed');
+  const [status, setStatus] = useState('attempted');
 
   // Functions
   const onGradeChange = event => {
@@ -35,16 +42,39 @@ export default function Tracker() {
   const onStatusChange = event => {
     setStatus(event.target.value);
   }
-  const onRecordClimb = () => {
-    if (status === 'completed') {
+  const onAddClimb = () => {
+    if (status === 'flashed') {
+      setFlashedClimbs({
+        ...flashedClimbs,
+        [grade]: completedClimbs[grade] ? completedClimbs[grade] + 1 : 1,
+      });
+    } else if (status === 'completed') {
       setCompletedClimbs({
         ...completedClimbs,
         [grade]: completedClimbs[grade] ? completedClimbs[grade] + 1 : 1,
       });
-    } else if (status === 'attempted'){
+    } else if (status === 'attempted') {
       setAttemptedClimbs({
         ...attemptedClimbs,
         [grade]: attemptedClimbs[grade] ? attemptedClimbs[grade] + 1 : 1,
+      });
+    }
+  }
+  const onRemoveClimb = () => {
+    if (status === 'flashed') {
+      setFlashedClimbs({
+        ...flashedClimbs,
+        [grade]: completedClimbs[grade] > 0 ? completedClimbs[grade] - 1 : 0,
+      });
+    } else if (status === 'completed') {
+      setCompletedClimbs({
+        ...completedClimbs,
+        [grade]: completedClimbs[grade] > 0 ? completedClimbs[grade] - 1 : 0,
+      });
+    } else if (status === 'attempted') {
+      setAttemptedClimbs({
+        ...attemptedClimbs,
+        [grade]: attemptedClimbs[grade] > 0 ? attemptedClimbs[grade] - 1 : 0,
       });
     }
   }
@@ -65,12 +95,20 @@ export default function Tracker() {
         </TableHead>
         <TableBody>
           <TableRow>
+            <TableCell>Flashed</TableCell>
+            {
+              Object.keys(CLIMBING_GRADES).map(key => (
+                <TableCell key={key}>{flashedClimbs[key]}</TableCell>
+              ))
+            }
+          </TableRow>
+          <TableRow>
             <TableCell>Completed</TableCell>
             {
               Object.keys(CLIMBING_GRADES).map(key => (
                 <TableCell key={key}>{completedClimbs[key]}</TableCell>
-              ))
-            }
+                ))
+              }
           </TableRow>
           <TableRow>
             <TableCell>Attempted</TableCell>
@@ -82,12 +120,18 @@ export default function Tracker() {
           </TableRow>
         </TableBody>
       </Table>
-      <RecordClimbModal
+      <AddClimbModal
         grade={grade}
         onGradeChange={onGradeChange}
         status={status}
         onStatusChange={onStatusChange}
-        onRecordClimb={onRecordClimb} />
+        onAddClimb={onAddClimb} />
+      <RemoveClimbModal
+        grade={grade}
+        onGradeChange={onGradeChange}
+        status={status}
+        onStatusChange={onStatusChange}
+        onRemoveClimb={onRemoveClimb} />
     </Fragment>
   );
 }
