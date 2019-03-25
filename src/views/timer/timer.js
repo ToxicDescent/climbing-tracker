@@ -21,16 +21,6 @@ export default function Timer({ sessionStarted }) {
   const onTick = () => {
     setCurrentTime(new Date().getTime());
   }
-  const onStartEndSession = () => {
-    if (sessionStarted) {
-      clearInterval(timerId);
-    } else {
-      setStartTime(new Date().getTime());
-      setCurrentTime(new Date().getTime());
-      setTimerId(setInterval(onTick, 1000));
-    }
-    setSessionStarted(!sessionStarted);
-  }
 
   // Render
   return (
