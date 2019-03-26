@@ -9,7 +9,7 @@ import AddClimbModal from '../addClimbModal/addClimbModal';
 import RemoveClimbModal from '../removeClimbModal/removeClimbModal';
 import { CLIMBING_GRADES } from '../../utility/constants';
 
-export default function Tracker() {
+export default function Tracker({ sessionStarted }) {
   // State
   const [flashedClimbs, setFlashedClimbs] = useState(() => {
     const initialState = {};
@@ -120,18 +120,23 @@ export default function Tracker() {
           </TableRow>
         </TableBody>
       </Table>
-      <AddClimbModal
-        grade={grade}
-        onGradeChange={onGradeChange}
-        status={status}
-        onStatusChange={onStatusChange}
-        onAddClimb={onAddClimb} />
-      <RemoveClimbModal
-        grade={grade}
-        onGradeChange={onGradeChange}
-        status={status}
-        onStatusChange={onStatusChange}
-        onRemoveClimb={onRemoveClimb} />
+      {
+        sessionStarted &&
+        <Fragment>
+          <AddClimbModal
+            grade={grade}
+            onGradeChange={onGradeChange}
+            status={status}
+            onStatusChange={onStatusChange}
+            onAddClimb={onAddClimb} />
+          <RemoveClimbModal
+            grade={grade}
+            onGradeChange={onGradeChange}
+            status={status}
+            onStatusChange={onStatusChange}
+            onRemoveClimb={onRemoveClimb} />
+        </Fragment>
+      }
     </Fragment>
   );
 }

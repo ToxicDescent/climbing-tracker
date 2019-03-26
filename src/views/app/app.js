@@ -47,8 +47,6 @@ export default function App() {
           </Button>
         </Fragment>
       }
-      <Timer sessionStarted={sessionStarted} />
-      <Tracker />
       {
         sessionStarted &&
         <Button
@@ -58,6 +56,8 @@ export default function App() {
           End Session
         </Button>
       }
+      <Timer sessionStarted={sessionStarted} />
+      <Tracker sessionStarted={sessionStarted} />
     </Fragment>
   );
 }

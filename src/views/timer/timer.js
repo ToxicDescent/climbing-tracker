@@ -12,6 +12,9 @@ export default function Timer({ sessionStarted }) {
       setStartTime(new Date().getTime());
       setCurrentTime(new Date().getTime());
       setTimerId(setInterval(onTick, 1000));
+    } else if (!sessionStarted && timerId) {
+      clearInterval(timerId);
+      setTimerId(null);
     }
 
     return () => clearInterval(timerId);
