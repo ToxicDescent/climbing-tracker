@@ -7,69 +7,46 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 import ModifyClimbModal from '../modifyClimbModal/modifyClimbModal';
-import { CLIMBING_GRADES } from '../../utility/constants';
+import { CLIMBING_GRADES, BOULDERING_STATUSES } from '../../utility/constants';
 
 export default function Tracker({ sessionStarted }) {
   // State
-  const [flashedClimbs, setFlashedClimbs] = useState(() => {
+  const [climbs, setClimbs] = useState(() => {
     const initialState = {};
-    Object.keys(CLIMBING_GRADES).forEach(key => {
-      initialState[key] = 0;
-    })
-    return initialState;
-  });
-  const [completedClimbs, setCompletedClimbs] = useState(() => {
-    const initialState = {};
-    Object.keys(CLIMBING_GRADES).forEach(key => {
-      initialState[key] = 0;
-    })
-    return initialState;
-  });
-  const [attemptedClimbs, setAttemptedClimbs] = useState(() => {
-    const initialState = {};
-    Object.keys(CLIMBING_GRADES).forEach(key => {
-      initialState[key] = 0;
-    })
+    Object.keys(CLIMBING_GRADES).forEach(grade => {
+      initialState[grade] = {};
+      Object.keys(BOULDERING_STATUSES).forEach(status => {
+        initialState[grade][status] = 0;
+      });
+    });
     return initialState;
   });
 
   // Functions
-  const onAddClimb = (grade, status) => {
-    if (status === 'flashed') {
-      setFlashedClimbs({
-        ...flashedClimbs,
-        [grade]: flashedClimbs[grade] ? flashedClimbs[grade] + 1 : 1,
-      });
-    } else if (status === 'completed') {
-      setCompletedClimbs({
-        ...completedClimbs,
-        [grade]: completedClimbs[grade] ? completedClimbs[grade] + 1 : 1,
-      });
-    } else if (status === 'attempted') {
-      setAttemptedClimbs({
-        ...attemptedClimbs,
-        [grade]: attemptedClimbs[grade] ? attemptedClimbs[grade] + 1 : 1,
-      });
+  const onModifyClimb = (type, grade, status) => {
+    switch(type) {
+      case 'add':
+        setClimbs({
+          ...climbs,
+          [grade]: {
+            ...climbs[grade],
+            [status]: climbs[grade][status] ? climbs[grade][status] + 1 : 1,
+          },
+        });
+        break;
+      case 'remove':
+        setClimbs({
+          ...climbs,
+          [grade]: {
+            ...climbs[grade],
+            [status]: climbs[grade][status] > 0 ? climbs[grade][status] - 1 : 0,
+          },
+        });
+        break;
+      default:
+        break;
     }
-  }
-  const onRemoveClimb = (grade, status) => {
-    if (status === 'flashed') {
-      setFlashedClimbs({
-        ...flashedClimbs,
-        [grade]: flashedClimbs[grade] > 0 ? flashedClimbs[grade] - 1 : 0,
-      });
-    } else if (status === 'completed') {
-      setCompletedClimbs({
-        ...completedClimbs,
-        [grade]: completedClimbs[grade] > 0 ? completedClimbs[grade] - 1 : 0,
-      });
-    } else if (status === 'attempted') {
-      setAttemptedClimbs({
-        ...attemptedClimbs,
-        [grade]: attemptedClimbs[grade] > 0 ? attemptedClimbs[grade] - 1 : 0,
-      });
-    }
-  }
+  };
 
   // Render
   return (
@@ -86,30 +63,18 @@ export default function Tracker({ sessionStarted }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell>Flashed</TableCell>
-            {
-              Object.keys(CLIMBING_GRADES).map(key => (
-                <TableCell key={key}>{flashedClimbs[key]}</TableCell>
-              ))
-            }
-          </TableRow>
-          <TableRow>
-            <TableCell>Completed</TableCell>
-            {
-              Object.keys(CLIMBING_GRADES).map(key => (
-                <TableCell key={key}>{completedClimbs[key]}</TableCell>
-                ))
-              }
-          </TableRow>
-          <TableRow>
-            <TableCell>Attempted</TableCell>
-            {
-              Object.keys(CLIMBING_GRADES).map(key => (
-                <TableCell key={key}>{attemptedClimbs[key]}</TableCell>
-              ))
-            }
-          </TableRow>
+          {
+            Object.keys(BOULDERING_STATUSES).map(status => (
+              <TableRow>
+                <TableCell key={status}>{BOULDERING_STATUSES[status]}</TableCell>
+                {
+                  Object.keys(CLIMBING_GRADES).map(grade => (
+                    <TableCell key={`${status}-${grade}`}>{climbs[grade][status]}</TableCell>
+                  ))
+                }
+              </TableRow>
+            ))
+          }
         </TableBody>
       </Table>
       {
@@ -117,10 +82,10 @@ export default function Tracker({ sessionStarted }) {
         <Fragment>
           <ModifyClimbModal
             type="add"
-            onModifyClimb={onAddClimb} />
+            onModifyClimb={onModifyClimb} />
           <ModifyClimbModal
             type="remove"
-            onModifyClimb={onRemoveClimb} />
+            onModifyClimb={onModifyClimb} />
         </Fragment>
       }
     </Fragment>

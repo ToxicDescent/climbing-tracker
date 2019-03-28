@@ -31,7 +31,7 @@ export default function ModifyClimbModal({ type, onModifyClimb }) {
   }
   const onCloseAndModifyDialog = () => {
     setOpenDialog(false);
-    onModifyClimb(grade, status);
+    onModifyClimb(type, grade, status);
   }
 
   // Render
