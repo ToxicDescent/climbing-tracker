@@ -1,3 +1,8 @@
+export const SESSION_LOCATIONS = {
+  indoor: 'Indoor',
+  outdoor: 'Outdoor',
+};
+
 export const CLIMBING_GRADES = {
   vb: 'VB',
   v0: 'V0',

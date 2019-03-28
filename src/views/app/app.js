@@ -8,6 +8,7 @@ import Radio from '@material-ui/core/Radio';
 
 import SessionTimer from '../sessionTimer/sessionTimer';
 import Tracker from '../tracker/tracker';
+import { SESSION_LOCATIONS } from '../../utility/constants';
 
 export default function App() {
   const [sessionStarted, setSessionStarted] = useState(false);
@@ -36,8 +37,11 @@ export default function App() {
             row
             value={sessionLocation}
             onChange={onSessionLocationChange}>
-            <FormControlLabel value="indoor" control={<Radio color="primary" />} label="Indoor" />
-            <FormControlLabel value="outdoor" control={<Radio color="secondary" />} label="Outdoor" />
+            {
+              Object.keys(SESSION_LOCATIONS).map(location => (
+                <FormControlLabel value={location} control={<Radio color="primary" />} label={SESSION_LOCATIONS[location]} />
+              ))
+            }
           </RadioGroup>
           <Button
             variant="contained"
