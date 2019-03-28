@@ -32,17 +32,9 @@ export default function Tracker({ sessionStarted }) {
     })
     return initialState;
   });
-  const [grade, setGrade] = useState('vb');
-  const [status, setStatus] = useState('attempted');
 
   // Functions
-  const onGradeChange = event => {
-    setGrade(event.target.value);
-  }
-  const onStatusChange = event => {
-    setStatus(event.target.value);
-  }
-  const onAddClimb = () => {
+  const onAddClimb = (grade, status) => {
     if (status === 'flashed') {
       setFlashedClimbs({
         ...flashedClimbs,
@@ -60,7 +52,7 @@ export default function Tracker({ sessionStarted }) {
       });
     }
   }
-  const onRemoveClimb = () => {
+  const onRemoveClimb = (grade, status) => {
     if (status === 'flashed') {
       setFlashedClimbs({
         ...flashedClimbs,
@@ -124,17 +116,11 @@ export default function Tracker({ sessionStarted }) {
         sessionStarted &&
         <Fragment>
           <ModifyClimbModal
-            grade={grade}
-            onGradeChange={onGradeChange}
-            status={status}
-            onStatusChange={onStatusChange}
-            onAddClimb={onAddClimb} />
+            type="add"
+            onModifyClimb={onAddClimb} />
           <ModifyClimbModal
-            grade={grade}
-            onGradeChange={onGradeChange}
-            status={status}
-            onStatusChange={onStatusChange}
-            onRemoveClimb={onRemoveClimb} />
+            type="remove"
+            onModifyClimb={onRemoveClimb} />
         </Fragment>
       }
     </Fragment>

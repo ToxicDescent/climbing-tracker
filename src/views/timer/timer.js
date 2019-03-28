@@ -28,7 +28,7 @@ export default function Timer({ sessionStarted }) {
   // Render
   return (
     <Fragment>
-      <Typography variant="body1">{new Date(currentTime - startTime).toISOString().substr(11, 8)}</Typography>
+      <Typography variant="h3">{new Date(currentTime - startTime).toISOString().substr(11, 8)}</Typography>
     </Fragment>
   )
 }

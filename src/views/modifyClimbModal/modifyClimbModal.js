@@ -13,19 +13,14 @@ import Button from '@material-ui/core/Button';
 
 import { CLIMBING_GRADES } from '../../utility/constants';
 
-export default function ModifyClimbModal({
-  grade,
-  onGradeChange,
-  status,
-  onStatusChange,
-  onAddClimb,
-  onRemoveClimb,
-}) {
+export default function ModifyClimbModal({ type, onModifyClimb }) {
   // State
   const [openDialog, setOpenDialog] = useState(false);
+  const [grade, setGrade] = useState('vb');
+  const [status, setStatus] = useState('attempted');
 
   // Variables
-  const onModifyClimb = onAddClimb ? onAddClimb : onRemoveClimb;
+  const text = type === 'add' ? 'Add Climb' : 'Remove Climb';
 
   // Functions
   const onOpenDialog = () => {
@@ -36,7 +31,7 @@ export default function ModifyClimbModal({
   }
   const onCloseAndModifyDialog = () => {
     setOpenDialog(false);
-    onModifyClimb();
+    onModifyClimb(grade, status);
   }
 
   // Render
@@ -46,19 +41,19 @@ export default function ModifyClimbModal({
         variant="contained"
         color="primary"
         onClick={onOpenDialog}>
-        {onAddClimb ? 'Add Climb' : 'Remove Climb'}
+        {text}
       </Button>
       <Dialog
         fullWidth
         maxWidth="sm"
         open={openDialog}
         onClose={onCloseDialog}>
-        <DialogTitle>{onAddClimb ? 'Add Climb' : 'Remove Climb'}</DialogTitle>
+        <DialogTitle>{text}</DialogTitle>
         <DialogContent>
           <InputLabel>Grade:</InputLabel>
           <NativeSelect 
             value={grade}
-            onChange={onGradeChange}>
+            onChange={event => { setGrade(event.target.value); }}>
             {
               Object.keys(CLIMBING_GRADES).map(key => (
                 <option key={key} value={key}>{CLIMBING_GRADES[key]}</option>
@@ -70,7 +65,7 @@ export default function ModifyClimbModal({
             name="climbStatus"
             aria-label="Climb status"
             value={status}
-            onChange={onStatusChange}>
+            onChange={event => { setStatus(event.target.value); }}>
             <FormControlLabel value="flashed" control={<Radio color="primary" />} label="Flashed" />
             <FormControlLabel value="completed" control={<Radio color="primary" />} label="Completed" />
             <FormControlLabel value="attempted" control={<Radio color="primary" />} label="Attempted" />
@@ -87,7 +82,7 @@ export default function ModifyClimbModal({
             variant="contained"
             color="primary"
             onClick={onCloseAndModifyDialog}>
-            {onAddClimb ? 'Add Climb' : 'Remove Climb'}
+            {text}
           </Button>
         </DialogActions>
       </Dialog>
@@ -95,16 +90,7 @@ export default function ModifyClimbModal({
   );
 }
 
-ModifyClimbModal.defaultProps = {
-  onAddClimb: null,
-  onRemoveClimb: null,
-};
-
 ModifyClimbModal.propTypes = {
-  grade: PropTypes.string.isRequired,
-  onGradeChange: PropTypes.func.isRequired,
-  status: PropTypes.string.isRequired,
-  onStatusChange: PropTypes.func.isRequired,
-  onAddClimb: PropTypes.func,
-  onRemoveClimb: PropTypes.func,
+  type: PropTypes.string.isRequired,
+  onModifyClimb: PropTypes.func.isRequired,
 };
