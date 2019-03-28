@@ -43,7 +43,6 @@ export default function Tracker({ sessionStarted }) {
     setStatus(event.target.value);
   }
   const onAddClimb = () => {
-    console.error('add');
     if (status === 'flashed') {
       setFlashedClimbs({
         ...flashedClimbs,
@@ -62,7 +61,6 @@ export default function Tracker({ sessionStarted }) {
     }
   }
   const onRemoveClimb = () => {
-
     if (status === 'flashed') {
       setFlashedClimbs({
         ...flashedClimbs,
