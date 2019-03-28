@@ -1,12 +1,12 @@
 import React, { Fragment, useState } from 'react';
+import PropTypes from 'prop-types';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-import AddClimbModal from '../addClimbModal/addClimbModal';
-import RemoveClimbModal from '../removeClimbModal/removeClimbModal';
+import ModifyClimbModal from '../modifyClimbModal/modifyClimbModal';
 import { CLIMBING_GRADES } from '../../utility/constants';
 
 export default function Tracker({ sessionStarted }) {
@@ -43,10 +43,11 @@ export default function Tracker({ sessionStarted }) {
     setStatus(event.target.value);
   }
   const onAddClimb = () => {
+    console.error('add');
     if (status === 'flashed') {
       setFlashedClimbs({
         ...flashedClimbs,
-        [grade]: completedClimbs[grade] ? completedClimbs[grade] + 1 : 1,
+        [grade]: flashedClimbs[grade] ? flashedClimbs[grade] + 1 : 1,
       });
     } else if (status === 'completed') {
       setCompletedClimbs({
@@ -61,10 +62,11 @@ export default function Tracker({ sessionStarted }) {
     }
   }
   const onRemoveClimb = () => {
+
     if (status === 'flashed') {
       setFlashedClimbs({
         ...flashedClimbs,
-        [grade]: completedClimbs[grade] > 0 ? completedClimbs[grade] - 1 : 0,
+        [grade]: flashedClimbs[grade] > 0 ? flashedClimbs[grade] - 1 : 0,
       });
     } else if (status === 'completed') {
       setCompletedClimbs({
@@ -123,13 +125,13 @@ export default function Tracker({ sessionStarted }) {
       {
         sessionStarted &&
         <Fragment>
-          <AddClimbModal
+          <ModifyClimbModal
             grade={grade}
             onGradeChange={onGradeChange}
             status={status}
             onStatusChange={onStatusChange}
             onAddClimb={onAddClimb} />
-          <RemoveClimbModal
+          <ModifyClimbModal
             grade={grade}
             onGradeChange={onGradeChange}
             status={status}
@@ -140,3 +142,7 @@ export default function Tracker({ sessionStarted }) {
     </Fragment>
   );
 }
+
+Tracker.propTypes = {
+  sessionStarted: PropTypes.bool.isRequired,
+};

@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -12,15 +13,19 @@ import Button from '@material-ui/core/Button';
 
 import { CLIMBING_GRADES } from '../../utility/constants';
 
-export default function RemoveClimbModal({
+export default function ModifyClimbModal({
   grade,
   onGradeChange,
   status,
   onStatusChange,
+  onAddClimb,
   onRemoveClimb,
 }) {
   // State
   const [openDialog, setOpenDialog] = useState(false);
+
+  // Variables
+  const onModifyClimb = onAddClimb ? onAddClimb : onRemoveClimb;
 
   // Functions
   const onOpenDialog = () => {
@@ -29,9 +34,9 @@ export default function RemoveClimbModal({
   const onCloseDialog = () => {
     setOpenDialog(false);
   }
-  const onCloseAndRemoveDialog = () => {
+  const onCloseAndModifyDialog = () => {
     setOpenDialog(false);
-    onRemoveClimb();
+    onModifyClimb();
   }
 
   // Render
@@ -39,16 +44,16 @@ export default function RemoveClimbModal({
     <Fragment>
       <Button
         variant="contained"
-        color="secondary"
+        color="primary"
         onClick={onOpenDialog}>
-        Remove Climb
+        {onAddClimb ? 'Add Climb' : 'Remove Climb'}
       </Button>
       <Dialog
         fullWidth
         maxWidth="sm"
         open={openDialog}
         onClose={onCloseDialog}>
-        <DialogTitle>Remove Climb</DialogTitle>
+        <DialogTitle>{onAddClimb ? 'Add Climb' : 'Remove Climb'}</DialogTitle>
         <DialogContent>
           <InputLabel>Grade:</InputLabel>
           <NativeSelect 
@@ -81,11 +86,25 @@ export default function RemoveClimbModal({
           <Button
             variant="contained"
             color="primary"
-            onClick={onCloseAndRemoveDialog}>
-            Remove Climb
+            onClick={onCloseAndModifyDialog}>
+            {onAddClimb ? 'Add Climb' : 'Remove Climb'}
           </Button>
         </DialogActions>
       </Dialog>
     </Fragment>
   );
 }
+
+ModifyClimbModal.defaultProps = {
+  onAddClimb: null,
+  onRemoveClimb: null,
+};
+
+ModifyClimbModal.propTypes = {
+  grade: PropTypes.string.isRequired,
+  onGradeChange: PropTypes.func.isRequired,
+  status: PropTypes.string.isRequired,
+  onStatusChange: PropTypes.func.isRequired,
+  onAddClimb: PropTypes.func,
+  onRemoveClimb: PropTypes.func,
+};
