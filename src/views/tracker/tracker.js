@@ -64,7 +64,7 @@ export default function Tracker({ sessionStarted }) {
         </TableHead>
         <TableBody>
           {Object.keys(BOULDERING_STATUSES).map(status => (
-            <TableRow>
+            <TableRow key={status}>
               <TableCell key={status}>{BOULDERING_STATUSES[status]}</TableCell>
               {Object.keys(CLIMBING_GRADES).map(grade => (
                 <TableCell key={`${status}-${grade}`}>

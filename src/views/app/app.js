@@ -39,6 +39,7 @@ export default function App() {
           >
             {Object.keys(SESSION_LOCATIONS).map(location => (
               <FormControlLabel
+                key={location}
                 value={location}
                 control={<Radio color="primary" />}
                 label={SESSION_LOCATIONS[location]}
