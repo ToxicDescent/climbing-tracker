@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 
 export default function SessionTimer({ sessionStarted }) {
-  // State
   const [startTime, setStartTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const timerRef = useRef();
@@ -22,7 +21,6 @@ export default function SessionTimer({ sessionStarted }) {
     return () => clearInterval(timerRef.current);
   }, [sessionStarted]);
 
-  // Render
   return (
     <Fragment>
       <Typography variant="h3">

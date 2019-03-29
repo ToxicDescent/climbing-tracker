@@ -14,15 +14,12 @@ import Button from '@material-ui/core/Button';
 import { BOULDERING_GRADES } from '../../utility/constants';
 
 export default function ModifyClimbModal({ type, onModifyClimb }) {
-  // State
   const [openDialog, setOpenDialog] = useState(false);
   const [grade, setGrade] = useState('vb');
   const [status, setStatus] = useState('attempted');
 
-  // Variables
   const text = type === 'add' ? 'Add Climb' : 'Remove Climb';
 
-  // Functions
   const onOpenDialog = () => {
     setOpenDialog(true);
   };
@@ -34,7 +31,6 @@ export default function ModifyClimbModal({ type, onModifyClimb }) {
     onModifyClimb(type, grade, status);
   };
 
-  // Render
   return (
     <Fragment>
       <Button variant="contained" color="primary" onClick={onOpenDialog}>

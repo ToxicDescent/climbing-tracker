@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -7,22 +7,34 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 import ModifyClimbModal from '../modifyClimbModal/modifyClimbModal';
-import { BOULDERING_GRADES, BOULDERING_STATUSES } from '../../utility/constants';
+import {
+  BOULDERING_GRADES,
+  BOULDERING_STATUSES
+} from '../../utility/constants';
+import usePrevious from '../../hooks/usePrevious';
 
 export default function Tracker({ sessionStarted }) {
-  // State
-  const [tracker, setTracker] = useState(() => {
-    const initialState = {};
+  const previousSessionStarted = usePrevious(sessionStarted);
+
+  const initialState = useMemo(() => {
+    const state = {};
     Object.keys(BOULDERING_GRADES).forEach(grade => {
-      initialState[grade] = {};
+      state[grade] = {};
       Object.keys(BOULDERING_STATUSES).forEach(status => {
-        initialState[grade][status] = 0;
+        state[grade][status] = 0;
       });
-    });
-    return initialState;
+    }, []);
+    return state;
   });
 
-  // Functions
+  const [tracker, setTracker] = useState(initialState);
+
+  useEffect(() => {
+    if (sessionStarted && !previousSessionStarted) {
+      setTracker(initialState);
+    }
+  }, [sessionStarted]);
+
   const onModifyClimb = (type, grade, status) => {
     switch (type) {
       case 'add':
@@ -49,7 +61,6 @@ export default function Tracker({ sessionStarted }) {
     }
   };
 
-  // Render
   return (
     <Fragment>
       <Table>
