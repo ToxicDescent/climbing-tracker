@@ -11,7 +11,7 @@ import { CLIMBING_GRADES, BOULDERING_STATUSES } from '../../utility/constants';
 
 export default function Tracker({ sessionStarted }) {
   // State
-  const [climbs, setClimbs] = useState(() => {
+  const [tracker, setTracker] = useState(() => {
     const initialState = {};
     Object.keys(CLIMBING_GRADES).forEach(grade => {
       initialState[grade] = {};
@@ -26,20 +26,21 @@ export default function Tracker({ sessionStarted }) {
   const onModifyClimb = (type, grade, status) => {
     switch (type) {
       case 'add':
-        setClimbs({
-          ...climbs,
+        setTracker({
+          ...tracker,
           [grade]: {
-            ...climbs[grade],
-            [status]: climbs[grade][status] ? climbs[grade][status] + 1 : 1
+            ...tracker[grade],
+            [status]: tracker[grade][status] ? tracker[grade][status] + 1 : 1
           }
         });
         break;
       case 'remove':
-        setClimbs({
-          ...climbs,
+        setTracker({
+          ...tracker,
           [grade]: {
-            ...climbs[grade],
-            [status]: climbs[grade][status] > 0 ? climbs[grade][status] - 1 : 0
+            ...tracker[grade],
+            [status]:
+              tracker[grade][status] > 0 ? tracker[grade][status] - 1 : 0
           }
         });
         break;
@@ -68,7 +69,7 @@ export default function Tracker({ sessionStarted }) {
               <TableCell key={status}>{BOULDERING_STATUSES[status]}</TableCell>
               {Object.keys(CLIMBING_GRADES).map(grade => (
                 <TableCell key={`${status}-${grade}`}>
-                  {climbs[grade][status]}
+                  {tracker[grade][status]}
                 </TableCell>
               ))}
             </TableRow>
