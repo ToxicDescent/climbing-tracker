@@ -28,60 +28,69 @@ export default function ModifyClimbModal({ type, onModifyClimb }) {
   };
   const onCloseDialog = () => {
     setOpenDialog(false);
-  }
+  };
   const onCloseAndModifyDialog = () => {
     setOpenDialog(false);
     onModifyClimb(type, grade, status);
-  }
+  };
 
   // Render
   return (
     <Fragment>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={onOpenDialog}>
+      <Button variant="contained" color="primary" onClick={onOpenDialog}>
         {text}
       </Button>
-      <Dialog
-        fullWidth
-        maxWidth="sm"
-        open={openDialog}
-        onClose={onCloseDialog}>
+      <Dialog fullWidth maxWidth="sm" open={openDialog} onClose={onCloseDialog}>
         <DialogTitle>{text}</DialogTitle>
         <DialogContent>
           <InputLabel>Grade:</InputLabel>
-          <NativeSelect 
+          <NativeSelect
             value={grade}
-            onChange={event => { setGrade(event.target.value); }}>
-            {
-              Object.keys(CLIMBING_GRADES).map(key => (
-                <option key={key} value={key}>{CLIMBING_GRADES[key]}</option>
-              ))
-            }
-          </NativeSelect >
+            onChange={event => {
+              setGrade(event.target.value);
+            }}
+          >
+            {Object.keys(CLIMBING_GRADES).map(key => (
+              <option key={key} value={key}>
+                {CLIMBING_GRADES[key]}
+              </option>
+            ))}
+          </NativeSelect>
           <RadioGroup
             row
             name="climbStatus"
             aria-label="Climb status"
             value={status}
-            onChange={event => { setStatus(event.target.value); }}>
-            <FormControlLabel value="flashed" control={<Radio color="primary" />} label="Flashed" />
-            <FormControlLabel value="completed" control={<Radio color="primary" />} label="Completed" />
-            <FormControlLabel value="attempted" control={<Radio color="primary" />} label="Attempted" />
+            onChange={event => {
+              setStatus(event.target.value);
+            }}
+          >
+            <FormControlLabel
+              value="flashed"
+              control={<Radio color="primary" />}
+              label="Flashed"
+            />
+            <FormControlLabel
+              value="completed"
+              control={<Radio color="primary" />}
+              label="Completed"
+            />
+            <FormControlLabel
+              value="attempted"
+              control={<Radio color="primary" />}
+              label="Attempted"
+            />
           </RadioGroup>
         </DialogContent>
         <DialogActions>
-        <Button
-            variant="contained"
-            color="secondary"
-            onClick={onCloseDialog}>
+          <Button variant="contained" color="secondary" onClick={onCloseDialog}>
             Cancel
           </Button>
           <Button
             variant="contained"
             color="primary"
-            onClick={onCloseAndModifyDialog}>
+            onClick={onCloseAndModifyDialog}
+          >
             {text}
           </Button>
         </DialogActions>
@@ -92,5 +101,5 @@ export default function ModifyClimbModal({ type, onModifyClimb }) {
 
 ModifyClimbModal.propTypes = {
   type: PropTypes.string.isRequired,
-  onModifyClimb: PropTypes.func.isRequired,
+  onModifyClimb: PropTypes.func.isRequired
 };

@@ -1,6 +1,6 @@
 export const SESSION_LOCATIONS = {
   indoor: 'Indoor',
-  outdoor: 'Outdoor',
+  outdoor: 'Outdoor'
 };
 
 export const CLIMBING_GRADES = {
@@ -14,11 +14,11 @@ export const CLIMBING_GRADES = {
   v6: 'V6',
   v7: 'V7',
   v8: 'V8',
-  v9: 'V9',
+  v9: 'V9'
 };
 
 export const BOULDERING_STATUSES = {
   flashed: 'Flashed',
   completed: 'Completed',
-  attempted: 'Attempted',
+  attempted: 'Attempted'
 };

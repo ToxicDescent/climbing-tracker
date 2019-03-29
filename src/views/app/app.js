@@ -16,50 +16,45 @@ export default function App() {
 
   const onStartSession = () => {
     setSessionStarted(true);
-  }
+  };
   const onEndSession = () => {
     setSessionStarted(false);
-  }
+  };
   const onSessionLocationChange = event => {
     setSessionLocation(event.target.value);
-  }
+  };
 
   return (
     <Fragment>
       <CssBaseline />
       <Typography variant="h1">Climbing Tracker</Typography>
-      {
-        !sessionStarted &&
+      {!sessionStarted && (
         <Fragment>
           <RadioGroup
             aria-label="Session location"
             name="sessionLocation"
             row
             value={sessionLocation}
-            onChange={onSessionLocationChange}>
-            {
-              Object.keys(SESSION_LOCATIONS).map(location => (
-                <FormControlLabel value={location} control={<Radio color="primary" />} label={SESSION_LOCATIONS[location]} />
-              ))
-            }
+            onChange={onSessionLocationChange}
+          >
+            {Object.keys(SESSION_LOCATIONS).map(location => (
+              <FormControlLabel
+                value={location}
+                control={<Radio color="primary" />}
+                label={SESSION_LOCATIONS[location]}
+              />
+            ))}
           </RadioGroup>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={onStartSession}>
+          <Button variant="contained" color="primary" onClick={onStartSession}>
             Start Session
           </Button>
         </Fragment>
-      }
-      {
-        sessionStarted &&
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={onEndSession}>
+      )}
+      {sessionStarted && (
+        <Button variant="contained" color="secondary" onClick={onEndSession}>
           End Session
         </Button>
-      }
+      )}
       <SessionTimer sessionStarted={sessionStarted} />
       <Tracker sessionStarted={sessionStarted} />
     </Fragment>

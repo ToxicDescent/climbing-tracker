@@ -7,7 +7,10 @@ export default function SessionTimer({ sessionStarted }) {
   const [startTime, setStartTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [timerId, setTimerId] = useState(null);
-  
+
+  const onTick = () => {
+    setCurrentTime(new Date().getTime());
+  };
   useEffect(() => {
     if (sessionStarted && !timerId) {
       setStartTime(new Date().getTime());
@@ -21,19 +24,16 @@ export default function SessionTimer({ sessionStarted }) {
     return () => clearInterval(timerId);
   }, [timerId, sessionStarted]);
 
-  // Functions
-  const onTick = () => {
-    setCurrentTime(new Date().getTime());
-  }
-
   // Render
   return (
     <Fragment>
-      <Typography variant="h3">{new Date(currentTime - startTime).toISOString().substr(11, 8)}</Typography>
+      <Typography variant="h3">
+        {new Date(currentTime - startTime).toISOString().substr(11, 8)}
+      </Typography>
     </Fragment>
-  )
+  );
 }
 
 SessionTimer.propTypes = {
-  sessionStarted: PropTypes.bool.isRequired,
+  sessionStarted: PropTypes.bool.isRequired
 };

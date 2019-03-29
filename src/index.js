@@ -3,9 +3,6 @@ import ReactDOM from 'react-dom';
 
 import App from './views/app/app';
 
-ReactDOM.render(
-  <App/>,
-  document.getElementById('app')
-);
+ReactDOM.render(<App />, document.getElementById('app'));
 
 module.hot.accept();

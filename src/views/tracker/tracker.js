@@ -24,14 +24,14 @@ export default function Tracker({ sessionStarted }) {
 
   // Functions
   const onModifyClimb = (type, grade, status) => {
-    switch(type) {
+    switch (type) {
       case 'add':
         setClimbs({
           ...climbs,
           [grade]: {
             ...climbs[grade],
-            [status]: climbs[grade][status] ? climbs[grade][status] + 1 : 1,
-          },
+            [status]: climbs[grade][status] ? climbs[grade][status] + 1 : 1
+          }
         });
         break;
       case 'remove':
@@ -39,8 +39,8 @@ export default function Tracker({ sessionStarted }) {
           ...climbs,
           [grade]: {
             ...climbs[grade],
-            [status]: climbs[grade][status] > 0 ? climbs[grade][status] - 1 : 0,
-          },
+            [status]: climbs[grade][status] > 0 ? climbs[grade][status] - 1 : 0
+          }
         });
         break;
       default:
@@ -54,44 +54,37 @@ export default function Tracker({ sessionStarted }) {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell></TableCell>
-            {
-              Object.keys(CLIMBING_GRADES).map(key => (
-                <TableCell key={key} align="center">{CLIMBING_GRADES[key]}</TableCell>
-              ))
-            }
+            <TableCell />
+            {Object.keys(CLIMBING_GRADES).map(key => (
+              <TableCell key={key} align="center">
+                {CLIMBING_GRADES[key]}
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {
-            Object.keys(BOULDERING_STATUSES).map(status => (
-              <TableRow>
-                <TableCell key={status}>{BOULDERING_STATUSES[status]}</TableCell>
-                {
-                  Object.keys(CLIMBING_GRADES).map(grade => (
-                    <TableCell key={`${status}-${grade}`}>{climbs[grade][status]}</TableCell>
-                  ))
-                }
-              </TableRow>
-            ))
-          }
+          {Object.keys(BOULDERING_STATUSES).map(status => (
+            <TableRow>
+              <TableCell key={status}>{BOULDERING_STATUSES[status]}</TableCell>
+              {Object.keys(CLIMBING_GRADES).map(grade => (
+                <TableCell key={`${status}-${grade}`}>
+                  {climbs[grade][status]}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
-      {
-        sessionStarted &&
+      {sessionStarted && (
         <Fragment>
-          <ModifyClimbModal
-            type="add"
-            onModifyClimb={onModifyClimb} />
-          <ModifyClimbModal
-            type="remove"
-            onModifyClimb={onModifyClimb} />
+          <ModifyClimbModal type="add" onModifyClimb={onModifyClimb} />
+          <ModifyClimbModal type="remove" onModifyClimb={onModifyClimb} />
         </Fragment>
-      }
+      )}
     </Fragment>
   );
 }
 
 Tracker.propTypes = {
-  sessionStarted: PropTypes.bool.isRequired,
+  sessionStarted: PropTypes.bool.isRequired
 };
