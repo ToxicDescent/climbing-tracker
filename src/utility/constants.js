@@ -3,7 +3,7 @@ export const SESSION_LOCATIONS = {
   outdoor: 'Outdoor'
 };
 
-export const CLIMBING_GRADES = {
+export const BOULDERING_GRADES = {
   vb: 'VB',
   v0: 'V0',
   v1: 'V1',

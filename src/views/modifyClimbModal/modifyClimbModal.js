@@ -11,7 +11,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import Button from '@material-ui/core/Button';
 
-import { CLIMBING_GRADES } from '../../utility/constants';
+import { BOULDERING_GRADES } from '../../utility/constants';
 
 export default function ModifyClimbModal({ type, onModifyClimb }) {
   // State
@@ -50,9 +50,9 @@ export default function ModifyClimbModal({ type, onModifyClimb }) {
               setGrade(event.target.value);
             }}
           >
-            {Object.keys(CLIMBING_GRADES).map(key => (
+            {Object.keys(BOULDERING_GRADES).map(key => (
               <option key={key} value={key}>
-                {CLIMBING_GRADES[key]}
+                {BOULDERING_GRADES[key]}
               </option>
             ))}
           </NativeSelect>

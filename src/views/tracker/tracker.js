@@ -7,13 +7,13 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 import ModifyClimbModal from '../modifyClimbModal/modifyClimbModal';
-import { CLIMBING_GRADES, BOULDERING_STATUSES } from '../../utility/constants';
+import { BOULDERING_GRADES, BOULDERING_STATUSES } from '../../utility/constants';
 
 export default function Tracker({ sessionStarted }) {
   // State
   const [tracker, setTracker] = useState(() => {
     const initialState = {};
-    Object.keys(CLIMBING_GRADES).forEach(grade => {
+    Object.keys(BOULDERING_GRADES).forEach(grade => {
       initialState[grade] = {};
       Object.keys(BOULDERING_STATUSES).forEach(status => {
         initialState[grade][status] = 0;
@@ -56,9 +56,9 @@ export default function Tracker({ sessionStarted }) {
         <TableHead>
           <TableRow>
             <TableCell />
-            {Object.keys(CLIMBING_GRADES).map(key => (
+            {Object.keys(BOULDERING_GRADES).map(key => (
               <TableCell key={key} align="center">
-                {CLIMBING_GRADES[key]}
+                {BOULDERING_GRADES[key]}
               </TableCell>
             ))}
           </TableRow>
@@ -67,7 +67,7 @@ export default function Tracker({ sessionStarted }) {
           {Object.keys(BOULDERING_STATUSES).map(status => (
             <TableRow key={status}>
               <TableCell key={status}>{BOULDERING_STATUSES[status]}</TableCell>
-              {Object.keys(CLIMBING_GRADES).map(grade => (
+              {Object.keys(BOULDERING_GRADES).map(grade => (
                 <TableCell key={`${status}-${grade}`}>
                   {tracker[grade][status]}
                 </TableCell>
