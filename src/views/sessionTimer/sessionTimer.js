@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 
@@ -6,23 +6,21 @@ export default function SessionTimer({ sessionStarted }) {
   // State
   const [startTime, setStartTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [timerId, setTimerId] = useState(null);
+  const timerRef = useRef();
 
-  const onTick = () => {
-    setCurrentTime(new Date().getTime());
-  };
   useEffect(() => {
-    if (sessionStarted && !timerId) {
+    if (sessionStarted) {
       setStartTime(new Date().getTime());
       setCurrentTime(new Date().getTime());
-      setTimerId(setInterval(onTick, 1000));
-    } else if (!sessionStarted && timerId) {
-      clearInterval(timerId);
-      setTimerId(null);
+      timerRef.current = setInterval(() => {
+        setCurrentTime(new Date().getTime());
+      }, 1000);
+    } else if (!sessionStarted) {
+      clearInterval(timerRef.current);
     }
 
-    return () => clearInterval(timerId);
-  }, [timerId, sessionStarted]);
+    return () => clearInterval(timerRef.current);
+  }, [sessionStarted]);
 
   // Render
   return (
