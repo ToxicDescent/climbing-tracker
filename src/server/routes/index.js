@@ -1,3 +1,3 @@
-import tracker from './tracker';
+import session from './session';
 
-export default { tracker };
+export default { session };
