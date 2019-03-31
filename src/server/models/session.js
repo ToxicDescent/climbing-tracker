@@ -11,6 +11,6 @@ const sessionSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
 
-const Session = mongoose.model('Sessions', sessionSchema);
+const Session = mongoose.model('Session', sessionSchema);
 
 export default Session;

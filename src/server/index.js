@@ -36,14 +36,39 @@ const seedDatabase = async () => {
     user: user1
   });
 
-  const session2 = new models.Session({
-    sessionTime: 7200,
-    location: 'outdoor',
-    user: user1
+  const climb1 = new models.Climb({
+    grade: 'v1',
+    status: {
+      flashed: 8,
+      completed: 0,
+      attempted: 0
+    },
+    session: session1
+  });
+  const climb2 = new models.Climb({
+    grade: 'v2',
+    status: {
+      flashed: 8,
+      completed: 0,
+      attempted: 0
+    },
+    session: session1
+  });
+  const climb3 = new models.Climb({
+    grade: 'v3',
+    status: {
+      flashed: 3,
+      completed: 3,
+      attempted: 5
+    },
+    session: session1
   });
 
+  await climb1.save();
+  await climb2.save();
+  await climb3.save();
+
   await session1.save();
-  await session2.save();
 
   await user1.save();
 };
