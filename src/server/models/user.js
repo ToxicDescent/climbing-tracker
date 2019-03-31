@@ -4,6 +4,14 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     unique: true
+  },
+  name: {
+    first: {
+      type: String
+    },
+    last: {
+      type: String
+    }
   }
 });
 

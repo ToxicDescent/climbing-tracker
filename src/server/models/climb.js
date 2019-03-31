@@ -5,19 +5,17 @@ const climbSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  status: {
-    flashed: {
-      type: Number,
-      required: true
-    },
-    completed: {
-      type: Number,
-      required: true
-    },
-    attempted: {
-      type: Number,
-      required: true
-    }
+  flashed: {
+    type: Number,
+    required: true
+  },
+  completed: {
+    type: Number,
+    required: true
+  },
+  attempted: {
+    type: Number,
+    required: true
   },
   session: { type: mongoose.Schema.Types.ObjectId, ref: 'Session' }
 });

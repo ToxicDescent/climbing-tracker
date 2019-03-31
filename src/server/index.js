@@ -27,11 +27,15 @@ const eraseDatabaseOnSync = true;
 
 const seedDatabase = async () => {
   const user1 = new models.User({
-    username: 'toxicdescent'
+    username: 'toxicdescent',
+    name: {
+      first: 'Patrick',
+      last: 'Haikal'
+    }
   });
 
   const session1 = new models.Session({
-    sessionTime: 10800,
+    length: 10800,
     location: 'indoor',
     timestamp: new Date(),
     user: user1
@@ -39,29 +43,23 @@ const seedDatabase = async () => {
 
   const climb1 = new models.Climb({
     grade: 'v1',
-    status: {
-      flashed: 8,
-      completed: 0,
-      attempted: 0
-    },
+    flashed: 8,
+    completed: 0,
+    attempted: 0,
     session: session1
   });
   const climb2 = new models.Climb({
     grade: 'v2',
-    status: {
-      flashed: 8,
-      completed: 0,
-      attempted: 0
-    },
+    flashed: 8,
+    completed: 0,
+    attempted: 0,
     session: session1
   });
   const climb3 = new models.Climb({
     grade: 'v3',
-    status: {
-      flashed: 3,
-      completed: 3,
-      attempted: 5
-    },
+    flashed: 3,
+    completed: 3,
+    attempted: 5,
     session: session1
   });
 

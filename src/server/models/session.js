@@ -5,7 +5,7 @@ const sessionSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  sessionTime: {
+  length: {
     type: Number
   },
   timestamp: {
