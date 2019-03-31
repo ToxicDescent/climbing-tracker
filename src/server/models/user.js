@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.static('findByUsername', function findByUsername(username) {
-  return this.find({ username });
+  return this.findOne({ username });
 });
 
 const User = mongoose.model('User', userSchema);
