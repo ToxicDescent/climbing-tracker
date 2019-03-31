@@ -15,10 +15,21 @@ router.get('/last', async (request, response) => {
   const { username } = request.body;
   const user = await request.context.models.User.findByUsername(username);
   if (user.id === request.context.user.id) {
-    const sessions = await request.context.models.Session.find({
+    const session = await request.context.models.Session.find({
       user
+    })
+      .sort({ timestamp: 'descending' })
+      .limit(1);
+    const climbs = await request.context.models.Climb.find({
+      session
     });
-    return response.send(sessions[0]);
+    const data = {
+      ...session,
+      climbs: {
+        ...climbs
+      }
+    };
+    return response.send(data);
   }
   return response.sendStatus(401);
 });

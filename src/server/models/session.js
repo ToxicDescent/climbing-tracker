@@ -8,6 +8,10 @@ const sessionSchema = new mongoose.Schema({
   sessionTime: {
     type: Number
   },
+  timestamp: {
+    type: Date,
+    required: true
+  },
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
 

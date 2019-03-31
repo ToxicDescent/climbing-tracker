@@ -33,6 +33,7 @@ const seedDatabase = async () => {
   const session1 = new models.Session({
     sessionTime: 10800,
     location: 'indoor',
+    timestamp: new Date(),
     user: user1
   });
 
