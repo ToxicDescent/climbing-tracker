@@ -13,10 +13,13 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use((request, response, next) => {
+app.use(async (request, response, next) => {
+  const user = await models.User.findOne({
+    username: 'toxicdescent'
+  });
   request.context = {
     models,
-    user: models.users.__id
+    user
   };
   next();
 });
@@ -27,7 +30,7 @@ const eraseDatabaseOnSync = true;
 
 const seedDatabase = async () => {
   const user1 = new models.User({
-    username: 'ToxicDescent'
+    username: 'toxicdescent'
   });
 
   const session1 = new models.Session({

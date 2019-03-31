@@ -7,14 +7,6 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-userSchema.statics.findByUsername = async username => {
-  const user = await this.findOne({
-    username
-  });
-
-  return user;
-};
-
 const User = mongoose.model('User', userSchema);
 
 export default User;
