@@ -7,6 +7,10 @@ const userSchema = new mongoose.Schema({
   }
 });
 
+userSchema.static('findByUsername', function findByUsername(username) {
+  return this.find({ username });
+});
+
 const User = mongoose.model('User', userSchema);
 
 export default User;

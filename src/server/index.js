@@ -14,12 +14,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(async (request, response, next) => {
-  const user = await models.User.findOne({
-    username: 'toxicdescent'
-  });
   request.context = {
     models,
-    user
+    user: await models.User.findByUsername('toxicdescent')
   };
   next();
 });
