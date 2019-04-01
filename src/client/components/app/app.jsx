@@ -7,7 +7,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 
 import SessionTimer from '../sessionTimer';
-import Tracker from '../tracker';
+import Session from '../session';
 import { SESSION_LOCATIONS } from '../../utility/constants';
 
 export default function App() {
@@ -57,7 +57,7 @@ export default function App() {
         </Button>
       )}
       <SessionTimer sessionStarted={sessionStarted} />
-      <Tracker sessionStarted={sessionStarted} />
+      <Session sessionStarted={sessionStarted} />
     </Fragment>
   );
 }
