@@ -82,7 +82,19 @@ export default function Session() {
 
   const onSaveSession = () => {
     setSessionSaved(true);
-    saveSession(sessionData);
+    const climbs = [];
+    Object.keys(sessionData).forEach(key => {
+      climbs.push({ grade: key, ...sessionData[key] });
+    });
+    const data = {
+      username: 'toxicdescent',
+      session: {
+        location: sessionLocation,
+        length: 1,
+        climbs
+      }
+    };
+    saveSession(data);
   };
 
   return (
