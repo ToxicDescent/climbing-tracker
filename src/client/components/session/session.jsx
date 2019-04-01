@@ -36,9 +36,11 @@ export default function Session() {
       setSessionData(initialSessionDataState);
     }
   }, [sessionStarted]);
+  const [sessionSaved, setSessionSaved] = useState(false);
 
   const onStartSession = () => {
     setSessionStarted(true);
+    setSessionSaved(false);
   };
   const onEndSession = () => {
     setSessionStarted(false);
@@ -54,7 +56,9 @@ export default function Session() {
           ...sessionData,
           [grade]: {
             ...sessionData[grade],
-            [status]: sessionData[grade][status] ? sessionData[grade][status] + 1 : 1
+            [status]: sessionData[grade][status]
+              ? sessionData[grade][status] + 1
+              : 1
           }
         });
         break;
@@ -64,13 +68,19 @@ export default function Session() {
           [grade]: {
             ...sessionData[grade],
             [status]:
-              sessionData[grade][status] > 0 ? sessionData[grade][status] - 1 : 0
+              sessionData[grade][status] > 0
+                ? sessionData[grade][status] - 1
+                : 0
           }
         });
         break;
       default:
         break;
     }
+  };
+
+  const onSaveSession = () => {
+    setSessionSaved(true);
   };
 
   return (
@@ -110,6 +120,13 @@ export default function Session() {
         <Fragment>
           <ModifyClimbModal type="add" onModifyClimb={onModifyClimb} />
           <ModifyClimbModal type="remove" onModifyClimb={onModifyClimb} />
+        </Fragment>
+      )}
+      {!sessionStarted && previousSessionStarted && !sessionSaved && (
+        <Fragment>
+          <Button variant="contained" color="primary" onClick={onSaveSession}>
+            Save Session
+          </Button>
         </Fragment>
       )}
     </Fragment>
