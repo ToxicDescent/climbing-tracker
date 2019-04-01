@@ -1,19 +1,22 @@
 import React, { Fragment, useState, useMemo, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
 
 import SessionTimer from '../sessionTimer';
 import SessionTable from '../sessionTable';
 import ModifyClimbModal from '../modifyClimbModal';
 import {
+  SESSION_LOCATIONS,
   BOULDERING_GRADES,
   BOULDERING_STATUSES
 } from '../../utility/constants';
 import usePrevious from '../../hooks/usePrevious';
 
-export default function Session({ sessionStarted }) {
-  const previousSessionStarted = usePrevious(sessionStarted);
-
-  const initialState = useMemo(() => {
+export default function Session() {
+  const initialSessionDataState = useMemo(() => {
     const state = {};
     Object.keys(BOULDERING_GRADES).forEach(grade => {
       state[grade] = {};
@@ -24,32 +27,44 @@ export default function Session({ sessionStarted }) {
     return state;
   });
 
-  const [session, setSession] = useState(initialState);
-
+  const [sessionData, setSessionData] = useState(initialSessionDataState);
+  const [sessionLocation, setSessionLocation] = useState('indoor');
+  const [sessionStarted, setSessionStarted] = useState(false);
+  const previousSessionStarted = usePrevious(sessionStarted);
   useEffect(() => {
     if (sessionStarted && !previousSessionStarted) {
-      setSession(initialState);
+      setSessionData(initialSessionDataState);
     }
   }, [sessionStarted]);
+
+  const onStartSession = () => {
+    setSessionStarted(true);
+  };
+  const onEndSession = () => {
+    setSessionStarted(false);
+  };
+  const onSessionLocationChange = event => {
+    setSessionLocation(event.target.value);
+  };
 
   const onModifyClimb = (type, grade, status) => {
     switch (type) {
       case 'add':
-        setSession({
-          ...session,
+        setSessionData({
+          ...sessionData,
           [grade]: {
-            ...session[grade],
-            [status]: session[grade][status] ? session[grade][status] + 1 : 1
+            ...sessionData[grade],
+            [status]: sessionData[grade][status] ? sessionData[grade][status] + 1 : 1
           }
         });
         break;
       case 'remove':
-        setSession({
-          ...session,
+        setSessionData({
+          ...sessionData,
           [grade]: {
-            ...session[grade],
+            ...sessionData[grade],
             [status]:
-              session[grade][status] > 0 ? session[grade][status] - 1 : 0
+              sessionData[grade][status] > 0 ? sessionData[grade][status] - 1 : 0
           }
         });
         break;
@@ -60,8 +75,37 @@ export default function Session({ sessionStarted }) {
 
   return (
     <Fragment>
+      <Typography variant="h1">Climbing Tracker</Typography>
+      {!sessionStarted && (
+        <Fragment>
+          <RadioGroup
+            aria-label="Session location"
+            name="sessionLocation"
+            row
+            value={sessionLocation}
+            onChange={onSessionLocationChange}
+          >
+            {Object.keys(SESSION_LOCATIONS).map(location => (
+              <FormControlLabel
+                key={location}
+                value={location}
+                control={<Radio color="primary" />}
+                label={SESSION_LOCATIONS[location]}
+              />
+            ))}
+          </RadioGroup>
+          <Button variant="contained" color="primary" onClick={onStartSession}>
+            Start Session
+          </Button>
+        </Fragment>
+      )}
+      {sessionStarted && (
+        <Button variant="contained" color="secondary" onClick={onEndSession}>
+          End Session
+        </Button>
+      )}
       <SessionTimer sessionStarted={sessionStarted} />
-      <SessionTable session={session} />
+      <SessionTable session={sessionData} />
       {sessionStarted && (
         <Fragment>
           <ModifyClimbModal type="add" onModifyClimb={onModifyClimb} />
@@ -71,7 +115,3 @@ export default function Session({ sessionStarted }) {
     </Fragment>
   );
 }
-
-Session.propTypes = {
-  sessionStarted: PropTypes.bool.isRequired
-};
