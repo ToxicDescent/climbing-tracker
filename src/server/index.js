@@ -76,7 +76,7 @@ connectDb().then(async () => {
     seedDatabase();
   }
 
-  app.listen(process.env.PORT, () => {
-    console.log(`Server listeng on port: ${process.env.PORT}`);
+  app.listen(process.env.SERVER_PORT, () => {
+    console.log(`Server listeng on port: ${process.env.SERVER_PORT}`);
   });
 });
