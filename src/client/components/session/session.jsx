@@ -14,6 +14,7 @@ import {
   BOULDERING_STATUSES
 } from '../../utility/constants';
 import usePrevious from '../../hooks/usePrevious';
+import saveSession from '../../api/session';
 
 export default function Session() {
   const initialSessionDataState = useMemo(() => {
@@ -81,6 +82,7 @@ export default function Session() {
 
   const onSaveSession = () => {
     setSessionSaved(true);
+    saveSession(sessionData);
   };
 
   return (
