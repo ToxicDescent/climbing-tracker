@@ -6,7 +6,6 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 
-import SessionTimer from '../sessionTimer';
 import Session from '../session';
 import { SESSION_LOCATIONS } from '../../utility/constants';
 
@@ -56,7 +55,6 @@ export default function App() {
           End Session
         </Button>
       )}
-      <SessionTimer sessionStarted={sessionStarted} />
       <Session sessionStarted={sessionStarted} />
     </Fragment>
   );

@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import SessionTimer from '../sessionTimer';
 import SessionTable from '../sessionTable';
 import ModifyClimbModal from '../modifyClimbModal';
 import {
@@ -59,6 +60,7 @@ export default function Session({ sessionStarted }) {
 
   return (
     <Fragment>
+      <SessionTimer sessionStarted={sessionStarted} />
       <SessionTable session={session} />
       {sessionStarted && (
         <Fragment>
