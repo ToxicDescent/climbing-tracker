@@ -6,8 +6,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 
-import SessionTimer from '../sessionTimer/sessionTimer';
-import Tracker from '../tracker/tracker';
+import SessionTimer from '../sessionTimer';
+import Tracker from '../tracker';
 import { SESSION_LOCATIONS } from '../../utility/constants';
 
 export default function App() {

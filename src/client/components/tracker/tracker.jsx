@@ -6,7 +6,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-import ModifyClimbModal from '../modifyClimbModal/modifyClimbModal';
+import ModifyClimbModal from '../modifyClimbModal';
 import {
   BOULDERING_GRADES,
   BOULDERING_STATUSES
