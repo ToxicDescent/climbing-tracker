@@ -7,12 +7,17 @@ router.post('/', async (request, response) => {
     request.body.username
   );
   if (user._id.equals(request.context.user._id)) {
-    await request.context.models.Session.create({
+    const session = await request.context.models.Session.create({
       location: request.body.session.location,
       length: request.body.session.length,
       timestamp: new Date(),
-      user: user._id,
-      climbs: request.body.session.climbs
+      user: user._id
+    });
+    request.body.session.climbs.forEach(async climb => {
+      await request.context.models.Climb.create({
+        ...climb,
+        session: session._id
+      });
     });
     return response.sendStatus(200);
   }
@@ -29,7 +34,14 @@ router.get('/last', async (request, response) => {
     })
       .sort({ timestamp: 'descending' })
       .limit(1);
-    return response.send(session);
+    const climbs = await request.context.models.Climb.find({
+      session
+    })
+    const data = {
+      ...session,
+      climbs
+    };
+    return response.send(data);
   }
   return response.sendStatus(401);
 });

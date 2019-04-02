@@ -11,29 +11,46 @@ import {
   BOULDERING_STATUSES
 } from '../../utility/constants';
 
-export default function SessionTable({ session }) {
+export default function SessionTable({ sessionClimbs }) {
   return (
     <Fragment>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell />
-            {Object.keys(BOULDERING_GRADES).map(key => (
-              <TableCell key={key} align="center">
-                {BOULDERING_GRADES[key]}
-              </TableCell>
-            ))}
+            <TableCell>Grade</TableCell>
+            {Object.keys(BOULDERING_GRADES).map(grade => {
+              if (
+                sessionClimbs.find(climb => {
+                  return grade === climb.grade;
+                })
+              ) {
+                return (
+                  <TableCell key={grade} align="center">
+                    {BOULDERING_GRADES[grade]}
+                  </TableCell>
+                );
+              }
+              return null;
+            })}
           </TableRow>
         </TableHead>
         <TableBody>
           {Object.keys(BOULDERING_STATUSES).map(status => (
             <TableRow key={status}>
               <TableCell key={status}>{BOULDERING_STATUSES[status]}</TableCell>
-              {Object.keys(BOULDERING_GRADES).map(grade => (
-                <TableCell key={`${status}-${grade}`}>
-                  {session[grade][status]}
-                </TableCell>
-              ))}
+              {Object.keys(BOULDERING_GRADES).map(grade => {
+                const index = sessionClimbs.findIndex(climb => {
+                  return climb.grade === grade;
+                });
+                if (index > -1) {
+                  return (
+                    <TableCell key={`${status}-${grade}`}>
+                      {sessionClimbs[index][status]}
+                    </TableCell>
+                  );
+                }
+                return null;
+              })}
             </TableRow>
           ))}
         </TableBody>
@@ -44,5 +61,5 @@ export default function SessionTable({ session }) {
 
 SessionTable.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  session: PropTypes.object.isRequired
+  sessionClimbs: PropTypes.array.isRequired
 };
