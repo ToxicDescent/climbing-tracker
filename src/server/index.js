@@ -34,41 +34,6 @@ const seedDatabase = async () => {
     }
   });
 
-  const session1 = new models.Session({
-    length: 10800,
-    location: 'indoor',
-    timestamp: new Date(),
-    user: user1,
-  });
-
-  const climb1 = new models.Climb({
-    grade: 'v1',
-    flashed: 8,
-    completed: 0,
-    attempted: 0,
-    session: session1
-  });
-  const climb2 = new models.Climb({
-    grade: 'v2',
-    flashed: 8,
-    completed: 0,
-    attempted: 0,
-    session: session1
-  });
-  const climb3 = new models.Climb({
-    grade: 'v3',
-    flashed: 3,
-    completed: 3,
-    attempted: 5,
-    session: session1
-  });
-
-  await climb1.save();
-  await climb2.save();
-  await climb3.save();
-
-  await session1.save();
-
   await user1.save();
 };
 
@@ -76,7 +41,8 @@ connectDb().then(async () => {
   if (eraseDatabaseOnSync) {
     await Promise.all([
       models.User.deleteMany({}),
-      models.Session.deleteMany({})
+      models.Session.deleteMany({}),
+      models.Climb.deleteMany({})
     ]);
 
     seedDatabase();

@@ -36,7 +36,7 @@ router.get('/last', async (request, response) => {
       .limit(1);
     const climbs = await request.context.models.Climb.find({
       session
-    })
+    });
     const data = {
       ...session,
       climbs
