@@ -1,9 +1,9 @@
 import { useRef, useEffect } from 'react';
 
 export default function usePrevious(value) {
-  const ref = useRef();
+  const savedValue = useRef();
   useEffect(() => {
-    ref.current = value;
+    savedValue.current = value;
   });
-  return ref.current;
+  return savedValue.current;
 }
