@@ -17,40 +17,23 @@ export default function SessionTable({ sessionClimbs }) {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Grade</TableCell>
-            {Object.keys(BOULDERING_GRADES).map(grade => {
-              if (
-                sessionClimbs.find(climb => {
-                  return grade === climb.grade;
-                })
-              ) {
-                return (
-                  <TableCell key={grade} align="center">
-                    {BOULDERING_GRADES[grade]}
-                  </TableCell>
-                );
-              }
-              return null;
-            })}
+            <TableCell>Grades</TableCell>
+            {Object.keys(BOULDERING_GRADES).map(key => (
+              <TableCell key={key} align="center">
+                {BOULDERING_GRADES[key]}
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
           {Object.keys(BOULDERING_STATUSES).map(status => (
             <TableRow key={status}>
               <TableCell key={status}>{BOULDERING_STATUSES[status]}</TableCell>
-              {Object.keys(BOULDERING_GRADES).map(grade => {
-                const index = sessionClimbs.findIndex(climb => {
-                  return climb.grade === grade;
-                });
-                if (index > -1) {
-                  return (
-                    <TableCell key={`${status}-${grade}`}>
-                      {sessionClimbs[index][status]}
-                    </TableCell>
-                  );
-                }
-                return null;
-              })}
+              {Object.keys(BOULDERING_GRADES).map(grade => (
+                <TableCell key={`${status}-${grade}`}>
+                  {sessionClimbs[grade][status]}
+                </TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>
@@ -61,5 +44,5 @@ export default function SessionTable({ sessionClimbs }) {
 
 SessionTable.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  sessionClimbs: PropTypes.array.isRequired
+  sessionClimbs: PropTypes.object.isRequired
 };

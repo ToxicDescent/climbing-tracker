@@ -16,7 +16,7 @@ import { BOULDERING_GRADES } from '../../utility/constants';
 export default function ModifyClimbModal({ type, onModifyClimb }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [grade, setGrade] = useState('vb');
-  const [status, setStatus] = useState('attempted');
+  const [status, setStatus] = useState('flashed');
 
   const text = type === 'add' ? 'Add Climb' : 'Remove Climb';
 

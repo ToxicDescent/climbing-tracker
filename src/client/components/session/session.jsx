@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useMemo, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -8,18 +8,33 @@ import Radio from '@material-ui/core/Radio';
 import SessionTimer from '../sessionTimer';
 import SessionTable from '../sessionTable';
 import ModifyClimbModal from '../modifyClimbModal';
-import { SESSION_LOCATIONS } from '../../utility/constants';
+import {
+  SESSION_LOCATIONS,
+  BOULDERING_GRADES,
+  BOULDERING_STATUSES
+} from '../../utility/constants';
 import usePrevious from '../../hooks/usePrevious';
 import saveSession from '../../api/session';
 
 export default function Session() {
-  const [sessionClimbs, setSessionClimbs] = useState([]);
+  const initialSessionClimbsState = useMemo(() => {
+    const initialState = {};
+    Object.keys(BOULDERING_GRADES).forEach(grade => {
+      initialState[grade] = {};
+      Object.keys(BOULDERING_STATUSES).forEach(status => {
+        initialState[grade][status] = 0;
+      });
+    }, []);
+    return initialState;
+  });
+
+  const [sessionClimbs, setSessionClimbs] = useState(initialSessionClimbsState);
   const [sessionLocation, setSessionLocation] = useState('indoor');
   const [sessionStarted, setSessionStarted] = useState(false);
   const previousSessionStarted = usePrevious(sessionStarted);
   useEffect(() => {
     if (sessionStarted && !previousSessionStarted) {
-      setSessionClimbs([]);
+      setSessionClimbs(initialSessionClimbsState);
     }
   }, [sessionStarted]);
   const [sessionSaved, setSessionSaved] = useState(false);
@@ -36,36 +51,34 @@ export default function Session() {
   };
 
   const onModifyClimb = (type, grade, status) => {
-    const newState = [...sessionClimbs];
-    const index = newState.findIndex(climb => {
-      return climb.grade === grade;
-    });
     switch (type) {
       case 'add':
-        if (index < 0) {
-          const newClimb = {
-            grade,
-            flashed: 0,
-            completed: 0,
-            attempted: 0
-          };
-          newClimb[status] += 1;
-          newState.push(newClimb);
-        } else {
-          newState[index][status] = newState[index][status]
-            ? newState[index][status] + 1
-            : 1;
-        }
+        setSessionClimbs({
+          ...sessionClimbs,
+          [grade]: {
+            ...sessionClimbs[grade],
+            [status]:
+              sessionClimbs[grade][status] === 0
+                ? sessionClimbs[grade][status] + 1
+                : 1
+          }
+        });
         break;
       case 'remove':
-        if (index > -1 && newState[index][status]) {
-          newState[index][status] -= 1;
-        }
+        setSessionClimbs({
+          ...sessionClimbs,
+          [grade]: {
+            ...sessionClimbs[grade],
+            [status]:
+              sessionClimbs[grade][status] > 0
+                ? sessionClimbs[grade][status] - 1
+                : 0
+          }
+        });
         break;
       default:
         break;
     }
-    setSessionClimbs(newState);
   };
 
   const onSaveSession = () => {
@@ -74,7 +87,7 @@ export default function Session() {
       username: 'toxicdescent',
       session: {
         location: sessionLocation,
-        length: 1,
+        length: 0,
         climbs: sessionClimbs
       }
     };
