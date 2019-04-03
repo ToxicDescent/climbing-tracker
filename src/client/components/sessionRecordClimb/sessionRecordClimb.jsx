@@ -37,8 +37,8 @@ export default function SessionRecordClimb({
 
   return (
     <Fragment>
-      <RecordClimbModal buttonText="Add Climb" callback={onAddClimb} />
-      <RecordClimbModal buttonText="Remove Climb" callback={onRemoveClimb} />
+      <RecordClimbModal mainText="Add Climb" callback={onAddClimb} />
+      <RecordClimbModal mainText="Remove Climb" callback={onRemoveClimb} />
     </Fragment>
   );
 }
