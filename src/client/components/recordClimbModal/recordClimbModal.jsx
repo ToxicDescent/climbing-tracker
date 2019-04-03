@@ -13,12 +13,10 @@ import Button from '@material-ui/core/Button';
 
 import { BOULDERING_GRADES } from '../../utility/constants';
 
-export default function ModifyClimbModal({ type, onModifyClimb }) {
+export default function RecordClimbModal({ buttonText, callback }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [grade, setGrade] = useState('vb');
   const [status, setStatus] = useState('flashed');
-
-  const text = type === 'add' ? 'Add Climb' : 'Remove Climb';
 
   const onOpenDialog = () => {
     setOpenDialog(true);
@@ -26,18 +24,18 @@ export default function ModifyClimbModal({ type, onModifyClimb }) {
   const onCloseDialog = () => {
     setOpenDialog(false);
   };
-  const onCloseAndModifyDialog = () => {
+  const onCloseDialogAndCallback = () => {
     setOpenDialog(false);
-    onModifyClimb(type, grade, status);
+    callback(grade, status);
   };
 
   return (
     <Fragment>
       <Button variant="contained" color="primary" onClick={onOpenDialog}>
-        {text}
+        {buttonText}
       </Button>
       <Dialog fullWidth maxWidth="sm" open={openDialog} onClose={onCloseDialog}>
-        <DialogTitle>{text}</DialogTitle>
+        <DialogTitle>{buttonText}</DialogTitle>
         <DialogContent>
           <InputLabel>Grade:</InputLabel>
           <NativeSelect
@@ -85,9 +83,9 @@ export default function ModifyClimbModal({ type, onModifyClimb }) {
           <Button
             variant="contained"
             color="primary"
-            onClick={onCloseAndModifyDialog}
+            onClick={onCloseDialogAndCallback}
           >
-            {text}
+            {buttonText}
           </Button>
         </DialogActions>
       </Dialog>
@@ -95,7 +93,7 @@ export default function ModifyClimbModal({ type, onModifyClimb }) {
   );
 }
 
-ModifyClimbModal.propTypes = {
-  type: PropTypes.string.isRequired,
-  onModifyClimb: PropTypes.func.isRequired
+RecordClimbModal.propTypes = {
+  buttonText: PropTypes.string.isRequired,
+  callback: PropTypes.func.isRequired
 };

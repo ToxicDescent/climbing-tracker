@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import ModifyClimbModal from '../modifyClimbModal';
+import RecordClimbModal from '../recordClimbModal';
 
 export default function SessionRecordClimb({
   sessionStarted,
@@ -10,40 +10,35 @@ export default function SessionRecordClimb({
 }) {
   if (!sessionStarted) return null;
 
-  const onModifyClimb = (type, grade, status) => {
-    switch (type) {
-      case 'add':
-        setSessionClimbs({
-          ...sessionClimbs,
-          [grade]: {
-            ...sessionClimbs[grade],
-            [status]: sessionClimbs[grade][status]
-              ? sessionClimbs[grade][status] + 1
-              : 1
-          }
-        });
-        break;
-      case 'remove':
-        setSessionClimbs({
-          ...sessionClimbs,
-          [grade]: {
-            ...sessionClimbs[grade],
-            [status]:
-              sessionClimbs[grade][status] > 0
-                ? sessionClimbs[grade][status] - 1
-                : 0
-          }
-        });
-        break;
-      default:
-        break;
-    }
+  const onAddClimb = (grade, status) => {
+    setSessionClimbs({
+      ...sessionClimbs,
+      [grade]: {
+        ...sessionClimbs[grade],
+        [status]: sessionClimbs[grade][status]
+          ? sessionClimbs[grade][status] + 1
+          : 1
+      }
+    });
+  };
+
+  const onRemoveClimb = (grade, status) => {
+    setSessionClimbs({
+      ...sessionClimbs,
+      [grade]: {
+        ...sessionClimbs[grade],
+        [status]:
+          sessionClimbs[grade][status] > 0
+            ? sessionClimbs[grade][status] - 1
+            : 0
+      }
+    });
   };
 
   return (
     <Fragment>
-      <ModifyClimbModal type="add" onModifyClimb={onModifyClimb} />
-      <ModifyClimbModal type="remove" onModifyClimb={onModifyClimb} />
+      <RecordClimbModal buttonText="Add Climb" callback={onAddClimb} />
+      <RecordClimbModal buttonText="Remove Climb" callback={onRemoveClimb} />
     </Fragment>
   );
 }
