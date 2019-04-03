@@ -3,6 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 import SessionLocation from '../sessionLocation';
+import SessionStartEnd from '../sessionStartEnd';
 import SessionTimer from '../sessionTimer';
 import SessionTable from '../sessionTable';
 import ModifyClimbModal from '../modifyClimbModal';
@@ -37,14 +38,6 @@ export default function Session() {
     }
   }, [sessionStarted]);
   const [sessionSaved, setSessionSaved] = useState(false);
-
-  const onStartSession = () => {
-    setSessionStarted(true);
-    setSessionSaved(false);
-  };
-  const onEndSession = () => {
-    setSessionStarted(false);
-  };
 
   const onModifyClimb = (type, grade, status) => {
     switch (type) {
@@ -94,16 +87,10 @@ export default function Session() {
         sessionLocation={sessionLocation}
         setSessionLocation={setSessionLocation}
       />
-      {!sessionStarted && (
-        <Button variant="contained" color="primary" onClick={onStartSession}>
-          Start Session
-        </Button>
-      )}
-      {sessionStarted && (
-        <Button variant="contained" color="secondary" onClick={onEndSession}>
-          End Session
-        </Button>
-      )}
+      <SessionStartEnd
+        sessionStarted={sessionStarted}
+        setSessionStarted={setSessionStarted}
+      />
       <SessionTimer
         sessionStarted={sessionStarted}
         setSessionLength={setSessionLength}
