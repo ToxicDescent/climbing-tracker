@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -18,24 +18,22 @@ export default function SessionLocation({
   };
 
   return (
-    <Fragment>
-      <RadioGroup
-        aria-label="Session location"
-        name="sessionLocation"
-        row
-        value={sessionLocation}
-        onChange={onSessionLocationChange}
-      >
-        {Object.keys(SESSION_LOCATIONS).map(location => (
-          <FormControlLabel
-            key={location}
-            value={location}
-            control={<Radio color="primary" />}
-            label={SESSION_LOCATIONS[location]}
-          />
-        ))}
-      </RadioGroup>
-    </Fragment>
+    <RadioGroup
+      aria-label="Session location"
+      name="sessionLocation"
+      row
+      value={sessionLocation}
+      onChange={onSessionLocationChange}
+    >
+      {Object.keys(SESSION_LOCATIONS).map(location => (
+        <FormControlLabel
+          key={location}
+          value={location}
+          control={<Radio color="primary" />}
+          label={SESSION_LOCATIONS[location]}
+        />
+      ))}
+    </RadioGroup>
   );
 }
 
