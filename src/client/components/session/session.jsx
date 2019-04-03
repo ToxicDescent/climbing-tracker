@@ -15,6 +15,7 @@ import {
 } from '../../utility/constants';
 import usePrevious from '../../hooks/usePrevious';
 import saveSession from '../../api/session';
+import sessionToBackend from '../../utility/converters';
 
 export default function Session() {
   const initialSessionClimbsState = useMemo(() => {
@@ -30,6 +31,7 @@ export default function Session() {
 
   const [sessionClimbs, setSessionClimbs] = useState(initialSessionClimbsState);
   const [sessionLocation, setSessionLocation] = useState('indoor');
+  const [sessionLength, setSessionLength] = useState(0);
   const [sessionStarted, setSessionStarted] = useState(false);
   const previousSessionStarted = usePrevious(sessionStarted);
   useEffect(() => {
@@ -83,15 +85,12 @@ export default function Session() {
 
   const onSaveSession = () => {
     setSessionSaved(true);
-    const data = {
-      username: 'toxicdescent',
-      session: {
-        location: sessionLocation,
-        length: 0,
-        climbs: sessionClimbs
-      }
+    const sessionData = {
+      location: sessionLocation,
+      length: sessionLength,
+      climbs: sessionClimbs
     };
-    saveSession(data);
+    saveSession(sessionToBackend(sessionData));
   };
 
   return (
@@ -125,7 +124,10 @@ export default function Session() {
           End Session
         </Button>
       )}
-      <SessionTimer sessionStarted={sessionStarted} />
+      <SessionTimer
+        sessionStarted={sessionStarted}
+        setSessionLength={setSessionLength}
+      />
       <SessionTable sessionClimbs={sessionClimbs} />
       {sessionStarted && (
         <Fragment>

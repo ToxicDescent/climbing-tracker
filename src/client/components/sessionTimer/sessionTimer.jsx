@@ -2,17 +2,23 @@ import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 
+import usePrevious from '../../hooks/usePrevious';
 import useInterval from '../../hooks/useInterval';
 
-export default function SessionTimer({ sessionStarted }) {
+export default function SessionTimer({ sessionStarted, setSessionLength }) {
+  const previousSessionStarted = usePrevious(sessionStarted);
   const [startTime, setStartTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   useEffect(() => {
     if (sessionStarted) {
-      setStartTime(new Date().getTime());
-      setCurrentTime(new Date().getTime());
+      if (!previousSessionStarted) {
+        setStartTime(new Date().getTime());
+        setCurrentTime(new Date().getTime());
+      } else {
+        setSessionLength(Math.round((currentTime - startTime) / 1000));
+      }
     }
-  }, [sessionStarted]);
+  }, [sessionStarted, currentTime]);
   useInterval(
     () => {
       setCurrentTime(new Date().getTime());
@@ -30,5 +36,6 @@ export default function SessionTimer({ sessionStarted }) {
 }
 
 SessionTimer.propTypes = {
-  sessionStarted: PropTypes.bool.isRequired
+  sessionStarted: PropTypes.bool.isRequired,
+  setSessionLength: PropTypes.func.isRequired
 };
