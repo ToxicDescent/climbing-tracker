@@ -1,15 +1,12 @@
 import React, { Fragment, useState, useMemo, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
 
+import SessionLocation from '../sessionLocation';
 import SessionTimer from '../sessionTimer';
 import SessionTable from '../sessionTable';
 import ModifyClimbModal from '../modifyClimbModal';
 import {
-  SESSION_LOCATIONS,
   BOULDERING_GRADES,
   BOULDERING_STATUSES
 } from '../../utility/constants';
@@ -48,9 +45,6 @@ export default function Session() {
   const onEndSession = () => {
     setSessionStarted(false);
   };
-  const onSessionLocationChange = event => {
-    setSessionLocation(event.target.value);
-  };
 
   const onModifyClimb = (type, grade, status) => {
     switch (type) {
@@ -59,10 +53,9 @@ export default function Session() {
           ...sessionClimbs,
           [grade]: {
             ...sessionClimbs[grade],
-            [status]:
-              sessionClimbs[grade][status]
-                ? sessionClimbs[grade][status] + 1
-                : 1
+            [status]: sessionClimbs[grade][status]
+              ? sessionClimbs[grade][status] + 1
+              : 1
           }
         });
         break;
@@ -96,28 +89,15 @@ export default function Session() {
   return (
     <Fragment>
       <Typography variant="h1">Climbing Tracker</Typography>
+      <SessionLocation
+        sessionStarted={sessionStarted}
+        sessionLocation={sessionLocation}
+        setSessionLocation={setSessionLocation}
+      />
       {!sessionStarted && (
-        <Fragment>
-          <RadioGroup
-            aria-label="Session location"
-            name="sessionLocation"
-            row
-            value={sessionLocation}
-            onChange={onSessionLocationChange}
-          >
-            {Object.keys(SESSION_LOCATIONS).map(location => (
-              <FormControlLabel
-                key={location}
-                value={location}
-                control={<Radio color="primary" />}
-                label={SESSION_LOCATIONS[location]}
-              />
-            ))}
-          </RadioGroup>
-          <Button variant="contained" color="primary" onClick={onStartSession}>
-            Start Session
-          </Button>
-        </Fragment>
+        <Button variant="contained" color="primary" onClick={onStartSession}>
+          Start Session
+        </Button>
       )}
       {sessionStarted && (
         <Button variant="contained" color="secondary" onClick={onEndSession}>
