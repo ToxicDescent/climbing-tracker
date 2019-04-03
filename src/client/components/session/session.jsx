@@ -5,7 +5,7 @@ import SessionLocation from '../sessionLocation';
 import SessionStartEnd from '../sessionStartEnd';
 import SessionTimer from '../sessionTimer';
 import SessionTable from '../sessionTable';
-import ModifyClimbModal from '../modifyClimbModal';
+import SessionRecordClimb from '../sessionRecordClimb';
 import SessionSave from '../sessionSave';
 import {
   BOULDERING_GRADES,
@@ -37,36 +37,6 @@ export default function Session() {
   }, [sessionStarted]);
   const [sessionSaved, setSessionSaved] = useState(false);
 
-  const onModifyClimb = (type, grade, status) => {
-    switch (type) {
-      case 'add':
-        setSessionClimbs({
-          ...sessionClimbs,
-          [grade]: {
-            ...sessionClimbs[grade],
-            [status]: sessionClimbs[grade][status]
-              ? sessionClimbs[grade][status] + 1
-              : 1
-          }
-        });
-        break;
-      case 'remove':
-        setSessionClimbs({
-          ...sessionClimbs,
-          [grade]: {
-            ...sessionClimbs[grade],
-            [status]:
-              sessionClimbs[grade][status] > 0
-                ? sessionClimbs[grade][status] - 1
-                : 0
-          }
-        });
-        break;
-      default:
-        break;
-    }
-  };
-
   return (
     <Fragment>
       <Typography variant="h1">Climbing Tracker</Typography>
@@ -85,12 +55,11 @@ export default function Session() {
         setSessionLength={setSessionLength}
       />
       <SessionTable sessionClimbs={sessionClimbs} />
-      {sessionStarted && (
-        <Fragment>
-          <ModifyClimbModal type="add" onModifyClimb={onModifyClimb} />
-          <ModifyClimbModal type="remove" onModifyClimb={onModifyClimb} />
-        </Fragment>
-      )}
+      <SessionRecordClimb
+        sessionStarted={sessionStarted}
+        sessionClimbs={sessionClimbs}
+        setSessionClimbs={setSessionClimbs}
+      />
       <SessionSave
         sessionStarted={sessionStarted}
         previousSessionStarted={previousSessionStarted}
