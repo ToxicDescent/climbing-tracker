@@ -60,7 +60,7 @@ export default function Session() {
           [grade]: {
             ...sessionClimbs[grade],
             [status]:
-              sessionClimbs[grade][status] === 0
+              sessionClimbs[grade][status]
                 ? sessionClimbs[grade][status] + 1
                 : 1
           }
