@@ -1,19 +1,17 @@
 import React, { Fragment, useState, useMemo, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 
 import SessionLocation from '../sessionLocation';
 import SessionStartEnd from '../sessionStartEnd';
 import SessionTimer from '../sessionTimer';
 import SessionTable from '../sessionTable';
 import ModifyClimbModal from '../modifyClimbModal';
+import SessionSave from '../sessionSave';
 import {
   BOULDERING_GRADES,
   BOULDERING_STATUSES
 } from '../../utility/constants';
 import usePrevious from '../../hooks/usePrevious';
-import saveSession from '../../api/session';
-import sessionToBackend from '../../utility/converters';
 
 export default function Session() {
   const initialSessionClimbsState = useMemo(() => {
@@ -69,16 +67,6 @@ export default function Session() {
     }
   };
 
-  const onSaveSession = () => {
-    setSessionSaved(true);
-    const sessionData = {
-      location: sessionLocation,
-      length: sessionLength,
-      climbs: sessionClimbs
-    };
-    saveSession(sessionToBackend(sessionData));
-  };
-
   return (
     <Fragment>
       <Typography variant="h1">Climbing Tracker</Typography>
@@ -90,6 +78,7 @@ export default function Session() {
       <SessionStartEnd
         sessionStarted={sessionStarted}
         setSessionStarted={setSessionStarted}
+        setSessionSaved={setSessionSaved}
       />
       <SessionTimer
         sessionStarted={sessionStarted}
@@ -102,13 +91,15 @@ export default function Session() {
           <ModifyClimbModal type="remove" onModifyClimb={onModifyClimb} />
         </Fragment>
       )}
-      {!sessionStarted && previousSessionStarted && !sessionSaved && (
-        <Fragment>
-          <Button variant="contained" color="primary" onClick={onSaveSession}>
-            Save Session
-          </Button>
-        </Fragment>
-      )}
+      <SessionSave
+        sessionStarted={sessionStarted}
+        previousSessionStarted={previousSessionStarted}
+        sessionSaved={sessionSaved}
+        setSessionSaved={setSessionSaved}
+        sessionLocation={sessionLocation}
+        sessionLength={sessionLength}
+        sessionClimbs={sessionClimbs}
+      />
     </Fragment>
   );
 }
