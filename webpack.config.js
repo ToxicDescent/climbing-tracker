@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ExtractCssChunksPlugin = require('extract-css-chunks-webpack-plugin');
 
 module.exports = {
   entry: './src/client/index.jsx',
@@ -14,9 +14,11 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: ExtractCssChunksPlugin.loader,
             options: {
-              publicPath: '/'
+              publicPath: '/',
+              hot: true
+              // reloadAll: true
             }
           },
           'css-loader?modules=true&localIdentName=[name]__[local]___[hash:base64:5]'
@@ -34,7 +36,7 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new MiniCssExtractPlugin({ filename: 'style.css' })
+    new ExtractCssChunksPlugin({ filename: 'style.css' })
   ],
   devServer: {
     contentBase: './dist',
