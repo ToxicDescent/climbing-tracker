@@ -1,4 +1,6 @@
-import React, { Fragment, useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 import SessionLocation from '../sessionLocation';
@@ -38,37 +40,67 @@ export default function Session() {
   const [sessionSaved, setSessionSaved] = useState(false);
 
   return (
-    <Fragment>
-      <Typography variant="h1">Climbing Tracker</Typography>
-      <SessionLocation
-        sessionStarted={sessionStarted}
-        sessionLocation={sessionLocation}
-        setSessionLocation={setSessionLocation}
-      />
-      <SessionStartEnd
-        sessionStarted={sessionStarted}
-        setSessionStarted={setSessionStarted}
-        setSessionSaved={setSessionSaved}
-      />
-      <SessionTimer
-        sessionStarted={sessionStarted}
-        setSessionLength={setSessionLength}
-      />
-      <SessionTable sessionClimbs={sessionClimbs} />
-      <SessionRecordClimb
-        sessionStarted={sessionStarted}
-        sessionClimbs={sessionClimbs}
-        setSessionClimbs={setSessionClimbs}
-      />
-      <SessionSave
-        sessionStarted={sessionStarted}
-        previousSessionStarted={previousSessionStarted}
-        sessionSaved={sessionSaved}
-        setSessionSaved={setSessionSaved}
-        sessionLocation={sessionLocation}
-        sessionLength={sessionLength}
-        sessionClimbs={sessionClimbs}
-      />
-    </Fragment>
+    <Grid
+      container
+      spacing={16}
+      direction="column"
+      justify="center"
+      alignItems="center"
+    >
+      <Grid item xs={12}>
+        <Typography variant="h1">Climbing Tracker</Typography>
+      </Grid>
+      <Paper>
+        <Grid
+          container
+          spacing={16}
+          direction="column"
+          justify="center"
+          alignItems="center"
+        >
+          <Grid item xs={12}>
+            <SessionLocation
+              sessionStarted={sessionStarted}
+              sessionLocation={sessionLocation}
+              setSessionLocation={setSessionLocation}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <SessionStartEnd
+              sessionStarted={sessionStarted}
+              setSessionStarted={setSessionStarted}
+              setSessionSaved={setSessionSaved}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <SessionTimer
+              sessionStarted={sessionStarted}
+              setSessionLength={setSessionLength}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <SessionTable sessionClimbs={sessionClimbs} />
+          </Grid>
+          <Grid item xs={12}>
+            <SessionRecordClimb
+              sessionStarted={sessionStarted}
+              sessionClimbs={sessionClimbs}
+              setSessionClimbs={setSessionClimbs}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <SessionSave
+              sessionStarted={sessionStarted}
+              previousSessionStarted={previousSessionStarted}
+              sessionSaved={sessionSaved}
+              setSessionSaved={setSessionSaved}
+              sessionLocation={sessionLocation}
+              sessionLength={sessionLength}
+              sessionClimbs={sessionClimbs}
+            />
+          </Grid>
+        </Grid>
+      </Paper>
+    </Grid>
   );
 }
