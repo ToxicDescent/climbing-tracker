@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -13,32 +13,30 @@ import {
 
 export default function SessionTable({ sessionClimbs }) {
   return (
-    <Fragment>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Grades</TableCell>
-            {Object.keys(BOULDERING_GRADES).map(key => (
-              <TableCell key={key} align="center">
-                {BOULDERING_GRADES[key]}
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>Grades</TableCell>
+          {Object.keys(BOULDERING_GRADES).map(key => (
+            <TableCell key={key} align="center">
+              {BOULDERING_GRADES[key]}
+            </TableCell>
+          ))}
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {Object.keys(BOULDERING_STATUSES).map(status => (
+          <TableRow key={status}>
+            <TableCell key={status}>{BOULDERING_STATUSES[status]}</TableCell>
+            {Object.keys(BOULDERING_GRADES).map(grade => (
+              <TableCell key={`${status}-${grade}`}>
+                {sessionClimbs[grade][status]}
               </TableCell>
             ))}
           </TableRow>
-        </TableHead>
-        <TableBody>
-          {Object.keys(BOULDERING_STATUSES).map(status => (
-            <TableRow key={status}>
-              <TableCell key={status}>{BOULDERING_STATUSES[status]}</TableCell>
-              {Object.keys(BOULDERING_GRADES).map(grade => (
-                <TableCell key={`${status}-${grade}`}>
-                  {sessionClimbs[grade][status]}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Fragment>
+        ))}
+      </TableBody>
+    </Table>
   );
 }
 
