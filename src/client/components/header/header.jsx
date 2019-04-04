@@ -9,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 export default function Header() {
   return (
-    <AppBar position="static">
+    <AppBar position="static" style={{ marginBottom: 10 }}>
       <Toolbar>
         <IconButton
           color="inherit"
