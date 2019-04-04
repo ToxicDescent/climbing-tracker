@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: './src/client/index.jsx',
@@ -10,10 +11,14 @@ module.exports = {
         use: ['babel-loader']
       },
       {
-        test: /\.(css)$/,
-        exclude: /node_modules/,
+        test: /\.css$/,
         use: [
-          'style-loader',
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '/'
+            }
+          },
           'css-loader?modules=true&localIdentName=[name]__[local]___[hash:base64:5]'
         ]
       }
@@ -27,7 +32,10 @@ module.exports = {
     publicPath: '/',
     filename: 'bundle.js'
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin({ filename: 'style.css' })
+  ],
   devServer: {
     contentBase: './dist',
     hot: true
