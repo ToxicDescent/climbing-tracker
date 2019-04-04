@@ -35,11 +35,13 @@
     "@material-ui/icons": "^3.0.2",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
+    "css-loader": "^2.1.1",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "mongoose": "^5.4.20",
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "react-dom": "^16.8.4",
+    "style-loader": "^0.23.1"
   }
 }

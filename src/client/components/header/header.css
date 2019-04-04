@@ -1,0 +1,12 @@
+.appBar {
+  margin-bottom: 10px;
+}
+
+.iconButton {
+  margin-left: -12px;
+  margin-right: 20px;
+}
+
+.heading {
+  flex-grow: 1;
+}

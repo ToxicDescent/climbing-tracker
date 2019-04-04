@@ -15,6 +15,8 @@ import {
 } from '../../utility/constants';
 import usePrevious from '../../hooks/usePrevious';
 
+import styles from './session.css';
+
 export default function Session() {
   const initialSessionClimbsState = useMemo(() => {
     const initialState = {};
@@ -41,14 +43,14 @@ export default function Session() {
 
   return (
     <Grid
+      className={styles.container}
       container
       spacing={16}
       direction="column"
       justify="center"
       alignItems="center"
-      style={{ margin: 0 }}
     >
-      <Paper style={{ margin: 10 }}>
+      <Paper className={styles.paper}>
         <Grid
           container
           spacing={16}
