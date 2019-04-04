@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 
 import SessionLocation from '../sessionLocation';
 import SessionStartEnd from '../sessionStartEnd';
@@ -47,9 +46,6 @@ export default function Session() {
       justify="center"
       alignItems="center"
     >
-      <Grid item xs={12}>
-        <Typography variant="h1">Climbing Tracker</Typography>
-      </Grid>
       <Paper>
         <Grid
           container
