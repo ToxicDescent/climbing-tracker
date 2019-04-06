@@ -6,8 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import SessionLocation from '../sessionLocation';
 import SessionStartEnd from '../sessionStartEnd';
 import SessionTimer from '../sessionTimer';
-import SessionTable from '../sessionTable';
-import SessionRecordClimb from '../sessionRecordClimb';
+import SessionTabs from '../sessionTabs';
 import SessionSave from '../sessionSave';
 import {
   BOULDERING_GRADES,
@@ -18,25 +17,36 @@ import usePrevious from '../../hooks/usePrevious';
 import styles from './session.css';
 
 const Session = () => {
-  const initialSessionClimbsState = useMemo(() => {
-    const initialState = {};
+  const initialBoulderingData = useMemo(() => {
+    const data = {};
     Object.keys(BOULDERING_GRADES).forEach(grade => {
-      initialState[grade] = {};
+      data[grade] = {};
       Object.keys(BOULDERING_STATUSES).forEach(status => {
-        initialState[grade][status] = 0;
+        data[grade][status] = 0;
       });
     }, []);
-    return initialState;
+    return data;
+  });
+  const initialClimbingData = useMemo(() => {
+    const data = {};
+    Object.keys(BOULDERING_GRADES).forEach(grade => {
+      data[grade] = {};
+      Object.keys(BOULDERING_STATUSES).forEach(status => {
+        data[grade][status] = 0;
+      });
+    }, []);
+    return data;
   });
 
-  const [sessionClimbs, setSessionClimbs] = useState(initialSessionClimbsState);
+  const [boulderingData, setBoulderingData] = useState(initialBoulderingData);
+  const [climbingData, setClimbingData] = useState(initialClimbingData);
   const [sessionLocation, setSessionLocation] = useState('indoor');
   const [sessionLength, setSessionLength] = useState(0);
   const [sessionStarted, setSessionStarted] = useState(false);
   const previousSessionStarted = usePrevious(sessionStarted);
   useEffect(() => {
     if (sessionStarted && !previousSessionStarted) {
-      setSessionClimbs(initialSessionClimbsState);
+      setBoulderingData(initialBoulderingData);
     }
   }, [sessionStarted]);
   const [sessionSaved, setSessionSaved] = useState(false);
@@ -77,11 +87,12 @@ const Session = () => {
             sessionStarted={sessionStarted}
             setSessionLength={setSessionLength}
           />
-          <SessionTable sessionClimbs={sessionClimbs} />
-          <SessionRecordClimb
+          <SessionTabs
             sessionStarted={sessionStarted}
-            sessionClimbs={sessionClimbs}
-            setSessionClimbs={setSessionClimbs}
+            boulderingData={boulderingData}
+            setBoulderingData={setBoulderingData}
+            climbingData={climbingData}
+            setClimbingData={setClimbingData}
           />
           <SessionSave
             sessionStarted={sessionStarted}
@@ -90,7 +101,7 @@ const Session = () => {
             setSessionSaved={setSessionSaved}
             sessionLocation={sessionLocation}
             sessionLength={sessionLength}
-            sessionClimbs={sessionClimbs}
+            sessionClimbs={boulderingData}
           />
         </Grid>
       </Paper>
