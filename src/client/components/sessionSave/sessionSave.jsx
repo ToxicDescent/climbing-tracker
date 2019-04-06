@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
 import saveSession from '../../api/session';
@@ -26,9 +27,11 @@ export default function SessionSave({
 
   if (!sessionStarted && previousSessionStarted && !sessionSaved) {
     return (
-      <Button variant="contained" color="primary" onClick={onSaveSession}>
-        Save Session
-      </Button>
+      <Grid item xs={12}>
+        <Button variant="contained" color="primary" onClick={onSaveSession}>
+          Save Session
+        </Button>
+      </Grid>
     );
   }
 
@@ -36,8 +39,8 @@ export default function SessionSave({
 }
 
 SessionSave.defaultProps = {
-  previousSessionStarted: null,
-}
+  previousSessionStarted: null
+};
 
 SessionSave.propTypes = {
   sessionStarted: PropTypes.bool.isRequired,

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import usePrevious from '../../hooks/usePrevious';
@@ -27,9 +28,11 @@ export default function SessionTimer({ sessionStarted, setSessionLength }) {
   );
 
   return (
-    <Typography variant="h3">
-      {new Date(currentTime - startTime).toISOString().substr(11, 8)}
-    </Typography>
+    <Grid item xs={12}>
+      <Typography variant="h3">
+        {new Date(currentTime - startTime).toISOString().substr(11, 8)}
+      </Typography>
+    </Grid>
   );
 }
 

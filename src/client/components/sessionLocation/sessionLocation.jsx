@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
@@ -18,22 +19,24 @@ export default function SessionLocation({
   };
 
   return (
-    <RadioGroup
-      aria-label="Session location"
-      name="sessionLocation"
-      row
-      value={sessionLocation}
-      onChange={onSessionLocationChange}
-    >
-      {Object.keys(SESSION_LOCATIONS).map(location => (
-        <FormControlLabel
-          key={location}
-          value={location}
-          control={<Radio color="primary" />}
-          label={SESSION_LOCATIONS[location]}
-        />
-      ))}
-    </RadioGroup>
+    <Grid item xs={12}>
+      <RadioGroup
+        aria-label="Session location"
+        name="sessionLocation"
+        row
+        value={sessionLocation}
+        onChange={onSessionLocationChange}
+      >
+        {Object.keys(SESSION_LOCATIONS).map(location => (
+          <FormControlLabel
+            key={location}
+            value={location}
+            control={<Radio color="primary" />}
+            label={SESSION_LOCATIONS[location]}
+          />
+        ))}
+      </RadioGroup>
+    </Grid>
   );
 }
 

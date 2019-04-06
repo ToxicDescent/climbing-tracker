@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
 export default function SessionStartEnd({
@@ -17,15 +18,19 @@ export default function SessionStartEnd({
 
   if (sessionStarted) {
     return (
-      <Button variant="contained" color="secondary" onClick={onEndSession}>
-        End Session
-      </Button>
+      <Grid item xs={12}>
+        <Button variant="contained" color="secondary" onClick={onEndSession}>
+          End Session
+        </Button>
+      </Grid>
     );
   }
   return (
-    <Button variant="contained" color="primary" onClick={onStartSession}>
-      Start Session
-    </Button>
+    <Grid item xs={12}>
+      <Button variant="contained" color="primary" onClick={onStartSession}>
+        Start Session
+      </Button>
+    </Grid>
   );
 }
 

@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
 
 import RecordClimbModal from '../recordClimbModal';
 
@@ -36,10 +37,10 @@ export default function SessionRecordClimb({
   };
 
   return (
-    <Fragment>
+    <Grid item xs={12}>
       <RecordClimbModal mainText="Add Climb" callback={onAddClimb} />
       <RecordClimbModal mainText="Remove Climb" callback={onRemoveClimb} />
-    </Fragment>
+    </Grid>
   );
 }
 

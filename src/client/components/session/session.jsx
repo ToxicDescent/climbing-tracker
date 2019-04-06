@@ -63,47 +63,35 @@ export default function Session() {
               Climbing Tracker
             </Typography>
           </Grid>
-          <Grid item xs={12}>
-            <SessionLocation
-              sessionStarted={sessionStarted}
-              sessionLocation={sessionLocation}
-              setSessionLocation={setSessionLocation}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <SessionStartEnd
-              sessionStarted={sessionStarted}
-              setSessionStarted={setSessionStarted}
-              setSessionSaved={setSessionSaved}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <SessionTimer
-              sessionStarted={sessionStarted}
-              setSessionLength={setSessionLength}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <SessionTable sessionClimbs={sessionClimbs} />
-          </Grid>
-          <Grid item xs={12}>
-            <SessionRecordClimb
-              sessionStarted={sessionStarted}
-              sessionClimbs={sessionClimbs}
-              setSessionClimbs={setSessionClimbs}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <SessionSave
-              sessionStarted={sessionStarted}
-              previousSessionStarted={previousSessionStarted}
-              sessionSaved={sessionSaved}
-              setSessionSaved={setSessionSaved}
-              sessionLocation={sessionLocation}
-              sessionLength={sessionLength}
-              sessionClimbs={sessionClimbs}
-            />
-          </Grid>
+          <SessionLocation
+            sessionStarted={sessionStarted}
+            sessionLocation={sessionLocation}
+            setSessionLocation={setSessionLocation}
+          />
+          <SessionStartEnd
+            sessionStarted={sessionStarted}
+            setSessionStarted={setSessionStarted}
+            setSessionSaved={setSessionSaved}
+          />
+          <SessionTimer
+            sessionStarted={sessionStarted}
+            setSessionLength={setSessionLength}
+          />
+          <SessionTable sessionClimbs={sessionClimbs} />
+          <SessionRecordClimb
+            sessionStarted={sessionStarted}
+            sessionClimbs={sessionClimbs}
+            setSessionClimbs={setSessionClimbs}
+          />
+          <SessionSave
+            sessionStarted={sessionStarted}
+            previousSessionStarted={previousSessionStarted}
+            sessionSaved={sessionSaved}
+            setSessionSaved={setSessionSaved}
+            sessionLocation={sessionLocation}
+            sessionLength={sessionLength}
+            sessionClimbs={sessionClimbs}
+          />
         </Grid>
       </Paper>
     </Grid>
