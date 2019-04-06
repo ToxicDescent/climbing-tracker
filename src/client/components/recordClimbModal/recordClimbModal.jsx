@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button';
 
 import { BOULDERING_GRADES } from '../../utility/constants';
 
-export default function RecordClimbModal({ mainText, callback }) {
+const RecordClimbModal = ({ mainText, callback }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [grade, setGrade] = useState('vb');
   const [status, setStatus] = useState('flashed');
@@ -91,9 +91,11 @@ export default function RecordClimbModal({ mainText, callback }) {
       </Dialog>
     </Fragment>
   );
-}
+};
 
 RecordClimbModal.propTypes = {
   mainText: PropTypes.string.isRequired,
   callback: PropTypes.func.isRequired
 };
+
+export default RecordClimbModal;

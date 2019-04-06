@@ -4,11 +4,11 @@ import Grid from '@material-ui/core/Grid';
 
 import RecordClimbModal from '../recordClimbModal';
 
-export default function SessionRecordClimb({
+const SessionRecordClimb = ({
   sessionStarted,
   sessionClimbs,
   setSessionClimbs
-}) {
+}) => {
   if (!sessionStarted) return null;
 
   const onAddClimb = (grade, status) => {
@@ -42,7 +42,7 @@ export default function SessionRecordClimb({
       <RecordClimbModal mainText="Remove Climb" callback={onRemoveClimb} />
     </Grid>
   );
-}
+};
 
 SessionRecordClimb.propTypes = {
   sessionStarted: PropTypes.bool.isRequired,
@@ -50,3 +50,5 @@ SessionRecordClimb.propTypes = {
   sessionClimbs: PropTypes.object.isRequired,
   setSessionClimbs: PropTypes.func.isRequired
 };
+
+export default SessionRecordClimb;

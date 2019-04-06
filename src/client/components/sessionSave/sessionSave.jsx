@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import saveSession from '../../api/session';
 import sessionToBackend from '../../utility/converters';
 
-export default function SessionSave({
+const SessionSave = ({
   sessionStarted,
   previousSessionStarted,
   sessionSaved,
@@ -14,7 +14,7 @@ export default function SessionSave({
   sessionLocation,
   sessionLength,
   sessionClimbs
-}) {
+}) => {
   const onSaveSession = () => {
     setSessionSaved(true);
     const sessionData = {
@@ -36,7 +36,7 @@ export default function SessionSave({
   }
 
   return null;
-}
+};
 
 SessionSave.defaultProps = {
   previousSessionStarted: null
@@ -52,3 +52,5 @@ SessionSave.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   sessionClimbs: PropTypes.object.isRequired
 };
+
+export default SessionSave;

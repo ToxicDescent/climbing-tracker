@@ -4,7 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from '../header';
 import Session from '../session';
 
-export default function App() {
+const App = () => {
   return (
     <Fragment>
       <CssBaseline />
@@ -12,4 +12,6 @@ export default function App() {
       <Session />
     </Fragment>
   );
-}
+};
+
+export default App;

@@ -8,7 +8,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import styles from './header.css';
 
-export default function Header() {
+const Header = () => {
   return (
     <AppBar className={styles.appBar} position="static">
       <Toolbar>
@@ -26,4 +26,6 @@ export default function Header() {
       </Toolbar>
     </AppBar>
   );
-}
+};
+
+export default Header;

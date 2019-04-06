@@ -12,7 +12,7 @@ import {
   BOULDERING_STATUSES
 } from '../../utility/constants';
 
-export default function SessionTable({ sessionClimbs }) {
+const SessionTable = ({ sessionClimbs }) => {
   return (
     <Grid item xs={12}>
       <Table>
@@ -41,9 +41,11 @@ export default function SessionTable({ sessionClimbs }) {
       </Table>
     </Grid>
   );
-}
+};
 
 SessionTable.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   sessionClimbs: PropTypes.object.isRequired
 };
+
+export default SessionTable;

@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import usePrevious from '../../hooks/usePrevious';
 import useInterval from '../../hooks/useInterval';
 
-export default function SessionTimer({ sessionStarted, setSessionLength }) {
+const SessionTimer = ({ sessionStarted, setSessionLength }) => {
   const previousSessionStarted = usePrevious(sessionStarted);
   const [startTime, setStartTime] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -34,9 +34,11 @@ export default function SessionTimer({ sessionStarted, setSessionLength }) {
       </Typography>
     </Grid>
   );
-}
+};
 
 SessionTimer.propTypes = {
   sessionStarted: PropTypes.bool.isRequired,
   setSessionLength: PropTypes.func.isRequired
 };
+
+export default SessionTimer;

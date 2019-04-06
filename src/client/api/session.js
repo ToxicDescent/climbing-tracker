@@ -1,4 +1,4 @@
-export default function saveSession(sessionData) {
+const saveSession = sessionData => {
   fetch('http://localhost:3000/api/session', {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, cors, *same-origin
@@ -23,4 +23,6 @@ export default function saveSession(sessionData) {
         error.message
       );
     });
-}
+};
+
+export default saveSession;

@@ -1,4 +1,4 @@
-export default function sessionToBackend(sessionData) {
+const sessionToBackend = sessionData => {
   const climbs = [];
   Object.keys(sessionData.climbs).forEach(grade => {
     const climb = {
@@ -23,4 +23,6 @@ export default function sessionToBackend(sessionData) {
     }
   };
   return backendData;
-}
+};
+
+export default sessionToBackend;

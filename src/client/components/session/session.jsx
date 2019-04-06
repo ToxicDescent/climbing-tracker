@@ -17,7 +17,7 @@ import usePrevious from '../../hooks/usePrevious';
 
 import styles from './session.css';
 
-export default function Session() {
+const Session = () => {
   const initialSessionClimbsState = useMemo(() => {
     const initialState = {};
     Object.keys(BOULDERING_GRADES).forEach(grade => {
@@ -96,4 +96,6 @@ export default function Session() {
       </Paper>
     </Grid>
   );
-}
+};
+
+export default Session;

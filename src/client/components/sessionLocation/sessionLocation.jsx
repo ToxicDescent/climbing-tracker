@@ -7,11 +7,11 @@ import Radio from '@material-ui/core/Radio';
 
 import { SESSION_LOCATIONS } from '../../utility/constants';
 
-export default function SessionLocation({
+const SessionLocation = ({
   sessionStarted,
   sessionLocation,
   setSessionLocation
-}) {
+}) => {
   if (sessionStarted) return null;
 
   const onSessionLocationChange = event => {
@@ -38,10 +38,12 @@ export default function SessionLocation({
       </RadioGroup>
     </Grid>
   );
-}
+};
 
 SessionLocation.propTypes = {
   sessionStarted: PropTypes.bool.isRequired,
   sessionLocation: PropTypes.string.isRequired,
   setSessionLocation: PropTypes.func.isRequired
 };
+
+export default SessionLocation;
