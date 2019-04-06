@@ -11,12 +11,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import Button from '@material-ui/core/Button';
 
-import { BOULDERING_GRADES } from '../../utility/constants';
-
-const RecordClimbModal = ({ mainText, callback }) => {
+const RecordClimbModal = ({ mainText, callback, grades, statuses }) => {
   const [openDialog, setOpenDialog] = useState(false);
-  const [grade, setGrade] = useState('vb');
-  const [status, setStatus] = useState('flashed');
+  const [currentGrade, setCurrentGrade] = useState(Object.keys(grades)[0]);
+  const [currentStatus, setCurrentStatus] = useState(Object.keys(statuses)[0]);
 
   const onOpenDialog = () => {
     setOpenDialog(true);
@@ -26,7 +24,7 @@ const RecordClimbModal = ({ mainText, callback }) => {
   };
   const onCloseDialogAndCallback = () => {
     setOpenDialog(false);
-    callback(grade, status);
+    callback(currentGrade, currentStatus);
   };
 
   return (
@@ -39,14 +37,14 @@ const RecordClimbModal = ({ mainText, callback }) => {
         <DialogContent>
           <InputLabel>Grade:</InputLabel>
           <NativeSelect
-            value={grade}
+            value={currentGrade}
             onChange={event => {
-              setGrade(event.target.value);
+              setCurrentGrade(event.target.value);
             }}
           >
-            {Object.keys(BOULDERING_GRADES).map(key => (
+            {Object.keys(grades).map(key => (
               <option key={key} value={key}>
-                {BOULDERING_GRADES[key]}
+                {grades[key]}
               </option>
             ))}
           </NativeSelect>
@@ -54,26 +52,19 @@ const RecordClimbModal = ({ mainText, callback }) => {
             row
             name="climbStatus"
             aria-label="Climb status"
-            value={status}
+            value={currentStatus}
             onChange={event => {
-              setStatus(event.target.value);
+              setCurrentStatus(event.target.value);
             }}
           >
-            <FormControlLabel
-              value="flashed"
-              control={<Radio color="primary" />}
-              label="Flashed"
-            />
-            <FormControlLabel
-              value="completed"
-              control={<Radio color="primary" />}
-              label="Completed"
-            />
-            <FormControlLabel
-              value="attempted"
-              control={<Radio color="primary" />}
-              label="Attempted"
-            />
+            {Object.keys(statuses).map(status => (
+              <FormControlLabel
+                key={status}
+                value={status}
+                control={<Radio color="primary" />}
+                label={statuses[status]}
+              />
+            ))}
           </RadioGroup>
         </DialogContent>
         <DialogActions>
@@ -95,7 +86,9 @@ const RecordClimbModal = ({ mainText, callback }) => {
 
 RecordClimbModal.propTypes = {
   mainText: PropTypes.string.isRequired,
-  callback: PropTypes.func.isRequired
+  callback: PropTypes.func.isRequired,
+  grades: PropTypes.objectOf(String).isRequired,
+  statuses: PropTypes.objectOf(String).isRequired
 };
 
 export default RecordClimbModal;

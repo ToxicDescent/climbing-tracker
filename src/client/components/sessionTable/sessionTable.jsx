@@ -7,32 +7,27 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-import {
-  BOULDERING_GRADES,
-  BOULDERING_STATUSES
-} from '../../utility/constants';
-
-const SessionTable = ({ sessionClimbs }) => {
+const SessionTable = ({ data, columnKeys, rowKeys }) => {
   return (
     <Grid item xs={12}>
       <Table>
         <TableHead>
           <TableRow>
             <TableCell>Grades</TableCell>
-            {Object.keys(BOULDERING_GRADES).map(key => (
+            {Object.keys(columnKeys).map(key => (
               <TableCell key={key} align="center">
-                {BOULDERING_GRADES[key]}
+                {columnKeys[key]}
               </TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.keys(BOULDERING_STATUSES).map(status => (
+          {Object.keys(rowKeys).map(status => (
             <TableRow key={status}>
-              <TableCell key={status}>{BOULDERING_STATUSES[status]}</TableCell>
-              {Object.keys(BOULDERING_GRADES).map(grade => (
+              <TableCell key={status}>{rowKeys[status]}</TableCell>
+              {Object.keys(columnKeys).map(grade => (
                 <TableCell key={`${status}-${grade}`}>
-                  {sessionClimbs[grade][status]}
+                  {data[grade][status]}
                 </TableCell>
               ))}
             </TableRow>
@@ -45,7 +40,9 @@ const SessionTable = ({ sessionClimbs }) => {
 
 SessionTable.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  sessionClimbs: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  columnKeys: PropTypes.objectOf(String).isRequired,
+  rowKeys: PropTypes.objectOf(String).isRequired
 };
 
 export default SessionTable;

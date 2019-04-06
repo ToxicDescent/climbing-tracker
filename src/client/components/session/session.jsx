@@ -10,7 +10,9 @@ import SessionTabs from '../sessionTabs';
 import SessionSave from '../sessionSave';
 import {
   BOULDERING_GRADES,
-  BOULDERING_STATUSES
+  BOULDERING_STATUSES,
+  CLIMBING_GRADES,
+  CLIMBING_STATUSES
 } from '../../utility/constants';
 import usePrevious from '../../hooks/usePrevious';
 
@@ -29,9 +31,9 @@ const Session = () => {
   });
   const initialClimbingData = useMemo(() => {
     const data = {};
-    Object.keys(BOULDERING_GRADES).forEach(grade => {
+    Object.keys(CLIMBING_GRADES).forEach(grade => {
       data[grade] = {};
-      Object.keys(BOULDERING_STATUSES).forEach(status => {
+      Object.keys(CLIMBING_STATUSES).forEach(status => {
         data[grade][status] = 0;
       });
     }, []);

@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 
 import SessionTable from '../sessionTable';
 import SessionRecordClimb from '../sessionRecordClimb';
+import {
+  BOULDERING_GRADES,
+  BOULDERING_STATUSES
+} from '../../utility/constants';
 
 const BoulderingSession = ({
   sessionStarted,
@@ -11,11 +15,17 @@ const BoulderingSession = ({
 }) => {
   return (
     <Fragment>
-      <SessionTable sessionClimbs={boulderingData} />
+      <SessionTable
+        data={boulderingData}
+        columnKeys={BOULDERING_GRADES}
+        rowKeys={BOULDERING_STATUSES}
+      />
       <SessionRecordClimb
         sessionStarted={sessionStarted}
-        sessionClimbs={boulderingData}
-        setSessionClimbs={setBoulderingData}
+        data={boulderingData}
+        setData={setBoulderingData}
+        grades={BOULDERING_GRADES}
+        statuses={BOULDERING_STATUSES}
       />
     </Fragment>
   );
