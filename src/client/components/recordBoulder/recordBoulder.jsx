@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 
 import {
@@ -13,6 +12,7 @@ import {
 } from '../../utility/constants';
 import GradeSelector from '../gradeSelector';
 import StatusSelector from '../statusSelector';
+import RecordModalActions from '../recordModalActions';
 
 const RecordBoulder = ({
   sessionStarted,
@@ -35,31 +35,6 @@ const RecordBoulder = ({
   const onCloseDialog = () => {
     setOpenDialog(false);
   };
-  const onAddClimb = () => {
-    setOpenDialog(false);
-    setBoulderingData({
-      ...boulderingData,
-      [currentGrade]: {
-        ...boulderingData[currentGrade],
-        [currentStatus]: boulderingData[currentGrade][currentStatus]
-          ? boulderingData[currentGrade][currentStatus] + 1
-          : 1
-      }
-    });
-  };
-  const onRemoveClimb = () => {
-    setOpenDialog(false);
-    setBoulderingData({
-      ...boulderingData,
-      [currentGrade]: {
-        ...boulderingData[currentGrade],
-        [currentStatus]:
-          boulderingData[currentGrade][currentStatus] > 0
-            ? boulderingData[currentGrade][currentStatus] - 1
-            : 0
-      }
-    });
-  };
 
   return (
     <Grid item xs={12}>
@@ -80,17 +55,13 @@ const RecordBoulder = ({
             setCurrentStatus={setCurrentStatus}
           />
         </DialogContent>
-        <DialogActions>
-          <Button variant="contained" color="secondary" onClick={onCloseDialog}>
-            Cancel
-          </Button>
-          <Button variant="contained" color="primary" onClick={onRemoveClimb}>
-            Remove Boulder
-          </Button>
-          <Button variant="contained" color="primary" onClick={onAddClimb}>
-            Add Boulder
-          </Button>
-        </DialogActions>
+        <RecordModalActions
+          data={boulderingData}
+          setData={setBoulderingData}
+          grade={currentGrade}
+          status={currentStatus}
+          setOpenDialog={setOpenDialog}
+        />
       </Dialog>
     </Grid>
   );

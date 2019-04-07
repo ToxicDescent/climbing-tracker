@@ -4,12 +4,12 @@ import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 
 import { CLIMBING_GRADES, CLIMBING_STATUSES } from '../../utility/constants';
 import GradeSelector from '../gradeSelector';
 import StatusSelector from '../statusSelector';
+import RecordModalActions from '../recordModalActions';
 
 const RecordClimb = ({ sessionStarted, climbingData, setClimbingData }) => {
   if (!sessionStarted) return null;
@@ -27,31 +27,6 @@ const RecordClimb = ({ sessionStarted, climbingData, setClimbingData }) => {
   };
   const onCloseDialog = () => {
     setOpenDialog(false);
-  };
-  const onAddClimb = () => {
-    setOpenDialog(false);
-    setClimbingData({
-      ...climbingData,
-      [currentGrade]: {
-        ...climbingData[currentGrade],
-        [currentStatus]: climbingData[currentGrade][currentStatus]
-          ? climbingData[currentGrade][currentStatus] + 1
-          : 1
-      }
-    });
-  };
-  const onRemoveClimb = () => {
-    setOpenDialog(false);
-    setClimbingData({
-      ...climbingData,
-      [currentGrade]: {
-        ...climbingData[currentGrade],
-        [currentStatus]:
-          climbingData[currentGrade][currentStatus] > 0
-            ? climbingData[currentGrade][currentStatus] - 1
-            : 0
-      }
-    });
   };
 
   return (
@@ -73,17 +48,13 @@ const RecordClimb = ({ sessionStarted, climbingData, setClimbingData }) => {
             setCurrentStatus={setCurrentStatus}
           />
         </DialogContent>
-        <DialogActions>
-          <Button variant="contained" color="secondary" onClick={onCloseDialog}>
-            Cancel
-          </Button>
-          <Button variant="contained" color="primary" onClick={onRemoveClimb}>
-            Remove Climb
-          </Button>
-          <Button variant="contained" color="primary" onClick={onAddClimb}>
-            Add Climb
-          </Button>
-        </DialogActions>
+        <RecordModalActions
+          data={climbingData}
+          setData={setClimbingData}
+          grade={currentGrade}
+          status={currentStatus}
+          setOpenDialog={setOpenDialog}
+        />
       </Dialog>
     </Grid>
   );
