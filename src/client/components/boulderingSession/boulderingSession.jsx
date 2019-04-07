@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import SessionTable from '../sessionTable';
-import SessionRecordClimb from '../sessionRecordClimb';
+import RecordBoulder from '../recordBoulder';
 import {
   BOULDERING_GRADES,
   BOULDERING_STATUSES
@@ -20,12 +20,10 @@ const BoulderingSession = ({
         columnKeys={BOULDERING_GRADES}
         rowKeys={BOULDERING_STATUSES}
       />
-      <SessionRecordClimb
+      <RecordBoulder
         sessionStarted={sessionStarted}
-        data={boulderingData}
-        setData={setBoulderingData}
-        grades={BOULDERING_GRADES}
-        statuses={BOULDERING_STATUSES}
+        boulderingData={boulderingData}
+        setBoulderingData={setBoulderingData}
       />
     </Fragment>
   );
