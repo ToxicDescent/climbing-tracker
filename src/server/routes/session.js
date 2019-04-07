@@ -14,7 +14,7 @@ router.post('/', async (request, response) => {
       user: user._id
     });
     request.body.session.boulders.forEach(async boulder => {
-      await request.context.models.Climb.create({
+      await request.context.models.Boulder.create({
         ...boulder,
         session: session._id
       });
