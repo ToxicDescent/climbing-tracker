@@ -7,26 +7,19 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 
-import {
-  BOULDERING_GRADES,
-  BOULDERING_STATUSES
-} from '../../utility/constants';
+import { CLIMBING_GRADES, CLIMBING_STATUSES } from '../../utility/constants';
 import GradeSelector from '../gradeSelector';
 import StatusSelector from '../statusSelector';
 
-const RecordBoulder = ({
-  sessionStarted,
-  boulderingData,
-  setBoulderingData
-}) => {
+const RecordClimb = ({ sessionStarted, climbingData, setClimbingData }) => {
   if (!sessionStarted) return null;
 
   const [openDialog, setOpenDialog] = useState(false);
   const [currentGrade, setCurrentGrade] = useState(
-    Object.keys(BOULDERING_GRADES)[0]
+    Object.keys(CLIMBING_GRADES)[0]
   );
   const [currentStatus, setCurrentStatus] = useState(
-    Object.keys(BOULDERING_STATUSES)[0]
+    Object.keys(CLIMBING_STATUSES)[0]
   );
 
   const onOpenDialog = () => {
@@ -37,25 +30,25 @@ const RecordBoulder = ({
   };
   const onAddClimb = () => {
     setOpenDialog(false);
-    setBoulderingData({
-      ...boulderingData,
+    setClimbingData({
+      ...climbingData,
       [currentGrade]: {
-        ...boulderingData[currentGrade],
-        [currentStatus]: boulderingData[currentGrade][currentStatus]
-          ? boulderingData[currentGrade][currentStatus] + 1
+        ...climbingData[currentGrade],
+        [currentStatus]: climbingData[currentGrade][currentStatus]
+          ? climbingData[currentGrade][currentStatus] + 1
           : 1
       }
     });
   };
   const onRemoveClimb = () => {
     setOpenDialog(false);
-    setBoulderingData({
-      ...boulderingData,
+    setClimbingData({
+      ...climbingData,
       [currentGrade]: {
-        ...boulderingData[currentGrade],
+        ...climbingData[currentGrade],
         [currentStatus]:
-          boulderingData[currentGrade][currentStatus] > 0
-            ? boulderingData[currentGrade][currentStatus] - 1
+          climbingData[currentGrade][currentStatus] > 0
+            ? climbingData[currentGrade][currentStatus] - 1
             : 0
       }
     });
@@ -64,18 +57,18 @@ const RecordBoulder = ({
   return (
     <Grid item xs={12}>
       <Button variant="contained" color="primary" onClick={onOpenDialog}>
-        Record Boulder
+        Record Climb
       </Button>
       <Dialog fullWidth maxWidth="sm" open={openDialog} onClose={onCloseDialog}>
-        <DialogTitle>Record Boulder</DialogTitle>
+        <DialogTitle>Record Climb</DialogTitle>
         <DialogContent>
           <GradeSelector
-            grades={BOULDERING_GRADES}
+            grades={CLIMBING_GRADES}
             currentGrade={currentGrade}
             setCurrentGrade={setCurrentGrade}
           />
           <StatusSelector
-            statuses={BOULDERING_STATUSES}
+            statuses={CLIMBING_STATUSES}
             currentStatus={currentStatus}
             setCurrentStatus={setCurrentStatus}
           />
@@ -85,10 +78,10 @@ const RecordBoulder = ({
             Cancel
           </Button>
           <Button variant="contained" color="primary" onClick={onRemoveClimb}>
-            Remove Boulder
+            Remove Climb
           </Button>
           <Button variant="contained" color="primary" onClick={onAddClimb}>
-            Add Boulder
+            Add Climb
           </Button>
         </DialogActions>
       </Dialog>
@@ -96,11 +89,11 @@ const RecordBoulder = ({
   );
 };
 
-RecordBoulder.propTypes = {
+RecordClimb.propTypes = {
   sessionStarted: PropTypes.bool.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  boulderingData: PropTypes.object.isRequired,
-  setBoulderingData: PropTypes.func.isRequired
+  climbingData: PropTypes.object.isRequired,
+  setClimbingData: PropTypes.func.isRequired
 };
 
-export default RecordBoulder;
+export default RecordClimb;

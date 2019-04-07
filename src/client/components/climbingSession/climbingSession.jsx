@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import SessionTable from '../sessionTable';
-import SessionRecordClimb from '../sessionRecordClimb';
+import RecordClimb from '../recordClimb';
 import { CLIMBING_GRADES, CLIMBING_STATUSES } from '../../utility/constants';
 
 const ClimbingSession = ({ sessionStarted, climbingData, setClimbingData }) => {
@@ -13,12 +13,10 @@ const ClimbingSession = ({ sessionStarted, climbingData, setClimbingData }) => {
         columnKeys={CLIMBING_GRADES}
         rowKeys={CLIMBING_STATUSES}
       />
-      <SessionRecordClimb
+      <RecordClimb
         sessionStarted={sessionStarted}
-        data={climbingData}
-        setData={setClimbingData}
-        grades={CLIMBING_GRADES}
-        statuses={CLIMBING_STATUSES}
+        climbingData={climbingData}
+        setClimbingData={setClimbingData}
       />
     </Fragment>
   );
