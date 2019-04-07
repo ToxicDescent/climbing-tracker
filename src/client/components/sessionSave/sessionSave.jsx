@@ -13,14 +13,16 @@ const SessionSave = ({
   setSessionSaved,
   sessionLocation,
   sessionLength,
-  sessionClimbs
+  boulderingData,
+  climbingData
 }) => {
   const onSaveSession = () => {
     setSessionSaved(true);
     const sessionData = {
       location: sessionLocation,
       length: sessionLength,
-      climbs: sessionClimbs
+      boulders: boulderingData,
+      climbs: climbingData
     };
     saveSession(sessionToBackend(sessionData));
   };
@@ -50,7 +52,9 @@ SessionSave.propTypes = {
   sessionLocation: PropTypes.string.isRequired,
   sessionLength: PropTypes.number.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  sessionClimbs: PropTypes.object.isRequired
+  boulderingData: PropTypes.object.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  climbingData: PropTypes.object.isRequired
 };
 
 export default SessionSave;

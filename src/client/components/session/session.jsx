@@ -103,7 +103,8 @@ const Session = () => {
             setSessionSaved={setSessionSaved}
             sessionLocation={sessionLocation}
             sessionLength={sessionLength}
-            sessionClimbs={boulderingData}
+            boulderingData={boulderingData}
+            climbingData={climbingData}
           />
         </Grid>
       </Paper>

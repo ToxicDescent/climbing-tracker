@@ -53,8 +53,8 @@ RecordModalActions.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   data: PropTypes.object.isRequired,
   setData: PropTypes.func.isRequired,
-  grade: PropTypes.objectOf(String).isRequired,
-  status: PropTypes.objectOf(String).isRequired,
+  grade: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
   setOpenDialog: PropTypes.func.isRequired
 };
 
