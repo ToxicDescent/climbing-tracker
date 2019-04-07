@@ -7,6 +7,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
+import styles from './sessionTable.css';
+
 const SessionTable = ({ data, columnKeys, rowKeys }) => {
   return (
     <Grid item xs={12}>
@@ -15,7 +17,7 @@ const SessionTable = ({ data, columnKeys, rowKeys }) => {
           <TableRow>
             <TableCell>Grades</TableCell>
             {Object.keys(columnKeys).map(key => (
-              <TableCell key={key} align="center">
+              <TableCell key={key} className={styles.cell} align="center">
                 {columnKeys[key]}
               </TableCell>
             ))}
@@ -26,7 +28,7 @@ const SessionTable = ({ data, columnKeys, rowKeys }) => {
             <TableRow key={status}>
               <TableCell key={status}>{rowKeys[status]}</TableCell>
               {Object.keys(columnKeys).map(grade => (
-                <TableCell key={`${status}-${grade}`}>
+                <TableCell key={`${status}-${grade}`} className={styles.cell}>
                   {data[grade][status]}
                 </TableCell>
               ))}
