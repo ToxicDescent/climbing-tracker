@@ -38,6 +38,7 @@ connectDb().then(async () => {
     await Promise.all([
       models.User.deleteMany({}),
       models.Session.deleteMany({}),
+      models.Boulder.deleteMany({}),
       models.Climb.deleteMany({})
     ]);
 
