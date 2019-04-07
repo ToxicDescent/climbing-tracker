@@ -27,11 +27,7 @@ const eraseDatabaseOnSync = true;
 
 const seedDatabase = async () => {
   const user1 = new models.User({
-    username: 'toxicdescent',
-    name: {
-      first: 'Patrick',
-      last: 'Haikal'
-    }
+    username: 'toxicdescent'
   });
 
   await user1.save();

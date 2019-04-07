@@ -1,11 +1,7 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, unique: true },
-  name: {
-    first: { type: String },
-    last: { type: String }
-  }
+  username: { type: String, unique: true }
 });
 
 userSchema.static('findByUsername', function findByUsername(username) {

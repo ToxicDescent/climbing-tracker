@@ -2,13 +2,14 @@ import mongoose from 'mongoose';
 
 import User from './user';
 import Session from './session';
+import Boulder from './boulder';
 import Climb from './climb';
 
 const connectDb = () => {
   return mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 };
 
-const models = { User, Session, Climb };
+const models = { User, Session, Boulder, Climb };
 
 export { connectDb };
 
