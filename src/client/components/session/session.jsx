@@ -49,6 +49,7 @@ const Session = () => {
   useEffect(() => {
     if (sessionStarted && !previousSessionStarted) {
       setBoulderingData(initialBoulderingData);
+      setClimbingData(initialClimbingData);
     }
   }, [sessionStarted]);
   const [sessionSaved, setSessionSaved] = useState(false);
