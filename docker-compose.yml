@@ -1,0 +1,45 @@
+version: "2"
+services:
+  client:
+    image: climbing-tracker-client
+    build: ./client
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./client:/client
+      - /client/node_modules
+    links:
+      - server
+    networks:
+      - webappnetwork
+  server:
+    image: climbing-tracker-server
+    build: ./server
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./server:/server
+      - /server/node_modules
+    depends_on:
+      - mongodb
+    networks:
+      - webappnetwork
+    environment:
+      - PORT=9000
+      - DATABASE_URL=mongodb://mongodb:27017/climbing-tracker
+  mongodb:
+    image: mongo
+    restart: unless-stopped
+    container_name: mongodb
+    volumes:
+      - ./data-node:/data/db
+    ports:
+      - 27017:27017
+    command: mongod --noauth --smallfiles
+    networks:
+      - webappnetwork
+networks:
+  webappnetwork:
+    driver: bridge
