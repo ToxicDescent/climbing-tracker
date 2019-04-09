@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractCssChunksPlugin = require('extract-css-chunks-webpack-plugin');
 
 module.exports = {
-  entry: './src/client/index.jsx',
+  entry: './src/index.jsx',
   module: {
     rules: [
       {
@@ -36,7 +36,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Climbing Tracker',
-      template: './src/client/public/index.html',
+      template: './src/public/index.html',
       filename: 'index.html',
       inject: 'body'
     }),

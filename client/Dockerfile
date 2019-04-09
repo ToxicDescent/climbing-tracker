@@ -1,7 +1,7 @@
 FROM node:11 as react-build
 WORKDIR /usr/src/app/
 COPY . ./
-RUN yarn && yarn build:client
+RUN yarn && yarn build
 
 FROM nginx:alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf

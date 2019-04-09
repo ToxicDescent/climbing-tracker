@@ -9,7 +9,5 @@ module.exports = merge(common, {
     contentBase: './build',
     hot: true
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-  ]
+  plugins: [new webpack.HotModuleReplacementPlugin()]
 });

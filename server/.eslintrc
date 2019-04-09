@@ -1,0 +1,9 @@
+{
+  "extends": ["prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "no-underscore-dangle": 0
+  },
+  "globals": {},
+  "parser": "babel-eslint"
+}
