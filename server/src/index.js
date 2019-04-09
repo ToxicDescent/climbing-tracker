@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import 'regenerator-runtime';
 
 import models, { connectDb } from './models';
 import routes from './routes';
