@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
@@ -14,26 +16,45 @@ const SessionSave = ({
   sessionLocation,
   sessionLength,
   boulderingData,
-  climbingData
+  climbingData,
+  username
 }) => {
+  const [alertOpen, setAlertOpen] = useState(false);
+
+  const onOpenAlert = () => {
+    setAlertOpen(true);
+  };
+  const onCloseAlert = () => {
+    setAlertOpen(false);
+  };
+
   const onSaveSession = () => {
-    setSessionSaved(true);
-    const sessionData = {
-      location: sessionLocation,
-      length: sessionLength,
-      boulders: boulderingData,
-      climbs: climbingData
-    };
-    saveSession(sessionToBackend(sessionData));
+    if (!username) {
+      onOpenAlert();
+    } else {
+      setSessionSaved(true);
+      const sessionData = {
+        location: sessionLocation,
+        length: sessionLength,
+        boulders: boulderingData,
+        climbs: climbingData
+      };
+      saveSession(sessionToBackend(sessionData, username));
+    }
   };
 
   if (!sessionStarted && previousSessionStarted && !sessionSaved) {
     return (
-      <Grid item xs={12}>
-        <Button variant="contained" color="primary" onClick={onSaveSession}>
-          Save Session
-        </Button>
-      </Grid>
+      <Fragment>
+        <Grid item xs={12}>
+          <Button variant="contained" color="primary" onClick={onSaveSession}>
+            Save Session
+          </Button>
+        </Grid>
+        <Dialog open={alertOpen} onClose={onCloseAlert}>
+          <DialogTitle>Enter your username in header!</DialogTitle>
+        </Dialog>
+      </Fragment>
     );
   }
 
@@ -54,7 +75,8 @@ SessionSave.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   boulderingData: PropTypes.object.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  climbingData: PropTypes.object.isRequired
+  climbingData: PropTypes.object.isRequired,
+  username: PropTypes.string.isRequired
 };
 
 export default SessionSave;

@@ -1,8 +1,9 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { Fragment, useState, useMemo, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
+import Header from '../header';
 import SessionLocation from '../sessionLocation';
 import SessionStartEnd from '../sessionStartEnd';
 import SessionTimer from '../sessionTimer';
@@ -53,63 +54,68 @@ const Session = () => {
     }
   }, [sessionStarted]);
   const [sessionSaved, setSessionSaved] = useState(false);
+  const [username, setUsername] = useState('');
 
   return (
-    <Grid
-      className={styles.container}
-      container
-      spacing={16}
-      direction="column"
-      justify="center"
-      alignItems="center"
-    >
-      <Paper className={styles.paper}>
-        <Grid
-          container
-          spacing={16}
-          direction="column"
-          justify="center"
-          alignItems="center"
-        >
-          <Grid item xs={12}>
-            <Typography variant="h2" color="inherit">
-              Climbing Tracker
-            </Typography>
+    <Fragment>
+      <Header username={username} setUsername={setUsername} />
+      <Grid
+        className={styles.container}
+        container
+        spacing={16}
+        direction="column"
+        justify="center"
+        alignItems="center"
+      >
+        <Paper className={styles.paper}>
+          <Grid
+            container
+            spacing={16}
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Grid item xs={12}>
+              <Typography variant="h2" color="inherit">
+                Climbing Tracker
+              </Typography>
+            </Grid>
+            <SessionLocation
+              sessionStarted={sessionStarted}
+              sessionLocation={sessionLocation}
+              setSessionLocation={setSessionLocation}
+            />
+            <SessionStartEnd
+              sessionStarted={sessionStarted}
+              setSessionStarted={setSessionStarted}
+              setSessionSaved={setSessionSaved}
+            />
+            <SessionTimer
+              sessionStarted={sessionStarted}
+              setSessionLength={setSessionLength}
+            />
+            <SessionTabs
+              sessionStarted={sessionStarted}
+              boulderingData={boulderingData}
+              setBoulderingData={setBoulderingData}
+              climbingData={climbingData}
+              setClimbingData={setClimbingData}
+            />
+            <SessionSave
+              sessionStarted={sessionStarted}
+              previousSessionStarted={previousSessionStarted}
+              sessionSaved={sessionSaved}
+              setSessionSaved={setSessionSaved}
+              sessionLocation={sessionLocation}
+              sessionLength={sessionLength}
+              boulderingData={boulderingData}
+              climbingData={climbingData}
+              username={username}
+            />
           </Grid>
-          <SessionLocation
-            sessionStarted={sessionStarted}
-            sessionLocation={sessionLocation}
-            setSessionLocation={setSessionLocation}
-          />
-          <SessionStartEnd
-            sessionStarted={sessionStarted}
-            setSessionStarted={setSessionStarted}
-            setSessionSaved={setSessionSaved}
-          />
-          <SessionTimer
-            sessionStarted={sessionStarted}
-            setSessionLength={setSessionLength}
-          />
-          <SessionTabs
-            sessionStarted={sessionStarted}
-            boulderingData={boulderingData}
-            setBoulderingData={setBoulderingData}
-            climbingData={climbingData}
-            setClimbingData={setClimbingData}
-          />
-          <SessionSave
-            sessionStarted={sessionStarted}
-            previousSessionStarted={previousSessionStarted}
-            sessionSaved={sessionSaved}
-            setSessionSaved={setSessionSaved}
-            sessionLocation={sessionLocation}
-            sessionLength={sessionLength}
-            boulderingData={boulderingData}
-            climbingData={climbingData}
-          />
-        </Grid>
-      </Paper>
-    </Grid>
+        </Paper>
+      </Grid>
+    </Fragment>
   );
 };
 

@@ -1,4 +1,4 @@
-const sessionToBackend = sessionData => {
+const sessionToBackend = (sessionData, username) => {
   const boulders = [];
   Object.keys(sessionData.boulders).forEach(grade => {
     const climb = {
@@ -30,7 +30,7 @@ const sessionToBackend = sessionData => {
     }
   });
   const backendData = {
-    username: 'toxicdescent',
+    username,
     session: {
       location: sessionData.location,
       length: sessionData.length,
