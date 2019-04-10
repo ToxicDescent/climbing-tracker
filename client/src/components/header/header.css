@@ -10,3 +10,13 @@
 .heading {
   flex-grow: 1;
 }
+
+.username>label {
+  color: lightgrey !important;
+}
+.username input {
+  color: white;
+}
+.username>div {
+  border-bottom: 1px solid white;
+}

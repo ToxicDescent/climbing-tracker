@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -28,7 +28,8 @@ const Header = ({ username, setUsername }) => {
           Climbing Tracker
         </Typography>
         <TextField
-          label="Username"
+          className={styles.username}
+          label="Enter username"
           value={username}
           onChange={onChange}
           margin="dense"
