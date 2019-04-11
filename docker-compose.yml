@@ -10,8 +10,6 @@ services:
       - server
     networks:
       - webappnetwork
-    environment:
-      - SERVER_URL=http://climbing-tracker-server:9000
   server:
     image: climbing-tracker-server
     build: ./server

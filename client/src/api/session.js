@@ -1,5 +1,7 @@
+import { getServerUrl } from '../environment/environment';
+
 const saveSession = sessionData => {
-  fetch(`${process.env.SERVER_URL}/api/session`, {
+  fetch(`${getServerUrl()}/api/session`, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, cors, *same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached

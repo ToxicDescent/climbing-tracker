@@ -1,6 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractCssChunksPlugin = require('extract-css-chunks-webpack-plugin');
-const DotenvWebpack = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/index.jsx',
@@ -37,9 +36,6 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
-    new DotenvWebpack({
-      systemvars: true
-    }),
     new HtmlWebpackPlugin({
       title: 'Climbing Tracker',
       template: './src/public/index.html',
