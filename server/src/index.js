@@ -24,14 +24,14 @@ app.use(async (request, response, next) => {
 
 app.use('/api/session', routes.session);
 
-const eraseDatabaseOnSync = false;
+const eraseDatabaseOnSync = true;
 
 const seedDatabase = async () => {
   const user1 = new models.User({
     username: 'toxicdescent'
   });
   const user2 = new models.User({
-    username: 'mobberbom',
+    username: 'mobberbom'
   });
 
   await user1.save();
@@ -39,7 +39,7 @@ const seedDatabase = async () => {
 };
 
 connectDb().then(async () => {
-  if (eraseDatabaseOnSync) {
+  if (eraseDatabaseOnSync && process.env.NODE_ENV === 'development') {
     await Promise.all([
       models.User.deleteMany({}),
       models.Session.deleteMany({}),
