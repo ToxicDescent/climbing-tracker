@@ -24,7 +24,7 @@ app.use(async (request, response, next) => {
 
 app.use('/api/session', routes.session);
 
-const eraseDatabaseOnSync = true;
+const eraseDatabaseOnSync = false;
 
 const seedDatabase = async () => {
   const user1 = new models.User({
