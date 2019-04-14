@@ -30,8 +30,12 @@ const seedDatabase = async () => {
   const user1 = new models.User({
     username: 'toxicdescent'
   });
+  const user2 = new models.User({
+    username: 'mobberbom',
+  });
 
   await user1.save();
+  await user2.save();
 };
 
 connectDb().then(async () => {
