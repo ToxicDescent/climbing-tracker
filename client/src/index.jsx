@@ -6,6 +6,8 @@ import { createGenerateClassName, jssPreset } from '@material-ui/core/styles';
 
 import App from './components/app';
 
+const environment = process.env.NODE_ENV;
+
 const generateClassName = createGenerateClassName();
 const jss = create({
   ...jssPreset(),
@@ -19,4 +21,6 @@ ReactDOM.render(
   document.getElementById('app')
 );
 
-module.hot.accept();
+if (environment === 'development') {
+  module.hot.accept();
+}
