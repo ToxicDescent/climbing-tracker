@@ -29,7 +29,8 @@ services:
     container_name: mongodb
     ports:
       - 27017:27017
-    command: mongod --noauth --smallfiles
+    volumes:
+      - ./mongodb/data:/data/db
     networks:
       - webappnetwork
 networks:
