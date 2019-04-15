@@ -5,5 +5,3 @@ client/.env
 server/node_modules/
 server/build/
 server/.env
-
-data/
