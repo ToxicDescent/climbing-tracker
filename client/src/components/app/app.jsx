@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import Session from '../session';
+import SessionPage from '../sessionPage';
 
 const App = () => {
   return (
     <Fragment>
       <CssBaseline />
-      <Session />
+      <SessionPage />
     </Fragment>
   );
 };

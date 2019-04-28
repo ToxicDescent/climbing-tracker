@@ -17,7 +17,7 @@ import {
 } from '../../utility/constants';
 import usePrevious from '../../hooks/usePrevious';
 
-import styles from './session.css';
+import styles from './sessionPage.css';
 
 const Session = () => {
   const initialBoulderingData = useMemo(() => {
