@@ -6,7 +6,10 @@ import Boulder from './boulder';
 import Climb from './climb';
 
 const connectDb = () => {
-  return mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+  return mongoose.connect(process.env.DATABASE_URL, {
+    useCreateIndex: true,
+    useNewUrlParser: true
+  });
 };
 
 const models = { User, Session, Boulder, Climb };
