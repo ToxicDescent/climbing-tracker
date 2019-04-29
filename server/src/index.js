@@ -16,6 +16,25 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(async (request, response, next) => {
+  const token = request.header.authorisation.split(' ')[1];
+  const payload = jwt.verify(token, 'this is a secure secret');
+  if (payload) {
+    controllers.user.getByEmail(payload.email).then(async user => {
+      request.context = {
+        models,
+        user
+      };
+      next();
+    });
+  } else {
+    next();
+  }
+});
+
+app.use('/api/user', routes.user);
+app.use('/api/session', routes.session);
+
 app.use(async (error, request, response, next) => {
   if (typeof error === 'string') {
     // custom application error
@@ -34,25 +53,6 @@ app.use(async (error, request, response, next) => {
 
   return response.sendStatus(500).json({ message: error.message });
 });
-
-app.use(async (request, response, next) => {
-  const token = request.header.authorization.split(' ')[1];
-  const payload = jwt.verify(token, 'this is a secure secret');
-  if (payload) {
-    controllers.user.getByEmail(payload.email).then(async user => {
-      request.context = {
-        models,
-        user
-      };
-      next();
-    });
-  } else {
-    next();
-  }
-});
-
-app.use('/api/user', routes.user);
-app.use('/api/session', routes.session);
 
 const eraseDatabaseOnSync = true;
 

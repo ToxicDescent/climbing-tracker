@@ -3,9 +3,9 @@ import bcrypt from 'bcryptjs';
 
 import models from '../models';
 
-const authenticate = async (email, password) => {
-  const user = await models.User.findByEmail(email);
-  if (user && bcrypt.compareSync(password, user.hash)) {
+const authenticate = async userDetails => {
+  const user = await models.User.findOne({ email: userDetails.email });
+  if (user && bcrypt.compareSync(userDetails.password, user.hash)) {
     const { hash, ...userWithoutHash } = user.toObject();
     const token = jwt.sign({ sub: user.id }, 'this is a secure secret');
     return {
@@ -37,7 +37,7 @@ const create = async userDetails => {
 
   // hash password
   if (userDetails.password) {
-    user.hash = bcrypt.hashSync(userDetails.password, 15);
+    user.hash = bcrypt.hashSync(userDetails.password, 10);
   }
 
   // save user
@@ -58,7 +58,7 @@ const update = async (id, userDetails) => {
 
   // hash password
   if (userDetails.password) {
-    userDetails.hash = bcrypt.hashSync(userDetails.password, 15);
+    userDetails.hash = bcrypt.hashSync(userDetails.password, 10);
   }
 
   // copy userDetails to user
