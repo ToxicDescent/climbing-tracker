@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
+import controllers from '../controllers';
+
 const router = Router();
 
 router.post('/', async (request, response) => {
-  const user = await request.context.models.User.findByUsername(
-    request.body.username
-  );
+  const user = await controllers.user.getByEmail(request.body.email);
   if (user._id.equals(request.context.user._id)) {
     const session = await request.context.models.Session.create({
       location: request.body.session.location,
