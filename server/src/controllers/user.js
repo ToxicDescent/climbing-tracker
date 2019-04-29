@@ -3,9 +3,9 @@ import bcrypt from 'bcryptjs';
 
 import models from '../models';
 
-const authenticate = async userDetails => {
-  const user = await models.User.findOne({ email: userDetails.email });
-  if (user && bcrypt.compareSync(userDetails.password, user.hash)) {
+const authenticate = async (email, password) => {
+  const user = await models.User.findOne({ email });
+  if (user && bcrypt.compareSync(password, user.hash)) {
     const { hash, ...userWithoutHash } = user.toObject();
     const token = jwt.sign({ sub: user.id }, 'this is a secure secret');
     return {

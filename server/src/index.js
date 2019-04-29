@@ -35,7 +35,7 @@ app.use(async (request, response, next) => {
 app.use('/api/user', routes.user);
 app.use('/api/session', routes.session);
 
-app.use(async (error, request, response, next) => {
+app.use((error, request, response, next) => {
   if (typeof error === 'string') {
     // custom application error
     return response.sendStatus(400).json({ message: error });

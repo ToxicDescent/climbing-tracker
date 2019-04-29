@@ -6,7 +6,8 @@ const router = Router();
 
 router.post('/login', async (request, response) => {
   const authenticatedUser = await controllers.user.authenticate(
-    request.context.user
+    request.body.email,
+    request.body.password
   );
   if (authenticatedUser) {
     response.json(authenticatedUser);
