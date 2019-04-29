@@ -1,14 +1,15 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import Session from '../session';
+import Routes from '../routes';
 
 const App = () => {
   return (
-    <Fragment>
+    <Router>
       <CssBaseline />
-      <Session />
-    </Fragment>
+      <Routes />
+    </Router>
   );
 };
 
