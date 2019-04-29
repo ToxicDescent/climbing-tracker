@@ -17,19 +17,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(async (request, response, next) => {
-  const token = request.header.authorisation.split(' ')[1];
-  const payload = jwt.verify(token, 'this is a secure secret');
-  if (payload) {
-    controllers.user.getByEmail(payload.email).then(async user => {
-      request.context = {
-        models,
-        user
-      };
-      next();
-    });
-  } else {
-    next();
+  if (request.header.authorisation) {
+    const token = request.header.authorisation.split(' ')[1];
+    const payload = jwt.verify(token, 'this is a secure secret');
+    if (payload) {
+      controllers.user.getByEmail(payload.email).then(async user => {
+        request.context = {
+          models,
+          user
+        };
+        next();
+      });
+    }
   }
+  next();
 });
 
 app.use('/api/user', routes.user);
@@ -38,20 +39,20 @@ app.use('/api/session', routes.session);
 app.use((error, request, response, next) => {
   if (typeof error === 'string') {
     // custom application error
-    return response.sendStatus(400).json({ message: error });
+    return response.status(400).json({ message: error });
   }
 
   if (error.name === 'ValidationError') {
     // mongoose validation error
-    return response.sendStatus(400).json({ message: error.message });
+    return response.status(400).json({ message: error.message });
   }
 
   if (error.name === 'UnauthorizedError') {
     // jwt authentication error
-    return response.sendStatus(401).json({ message: 'Invalid Token' });
+    return response.status(401).json({ message: 'Invalid Token' });
   }
 
-  return response.sendStatus(500).json({ message: error.message });
+  return response.status(500).json({ message: error.message });
 });
 
 const eraseDatabaseOnSync = true;

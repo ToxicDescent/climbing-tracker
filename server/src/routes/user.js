@@ -12,7 +12,7 @@ router.post('/login', async (request, response) => {
   if (authenticatedUser) {
     response.json(authenticatedUser);
   }
-  response.sendStatus(400).json({ message: 'Email or password is incorrect' });
+  response.status(400).json({ message: 'Email or password is incorrect' });
 });
 
 export default router;

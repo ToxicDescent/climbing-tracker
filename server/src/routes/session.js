@@ -25,9 +25,9 @@ router.post('/', async (request, response) => {
         session: session._id
       });
     });
-    return response.sendStatus(200);
+    return response.status(200);
   }
-  return response.sendStatus(401);
+  return response.status(401);
 });
 
 export default router;

@@ -1,16 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
+import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+
+import loginUser from '../../api/user';
 
 import styles from './loginPage.css';
 
 const LoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onChange = event => {
+    switch (event.target.name) {
+      case 'email':
+        setEmail(event.target.value);
+        break;
+      case 'password':
+        setPassword(event.target.value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const onClick = () => {
+    loginUser(email, password);
+  };
+
   return (
     <div className={styles.loginPage}>
       <Paper className={styles.paper}>
@@ -20,30 +40,36 @@ const LoginPage = () => {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        <form>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Email</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="password"
-            />
-          </FormControl>
-          <Button
-            className={styles.submit}
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-          >
-            Login
-          </Button>
-        </form>
+        <TextField
+          name="email"
+          label="Enter Email"
+          type="text"
+          value={email}
+          onChange={onChange}
+          autoFocus
+          fullWidth
+          margin="dense"
+          color="inherit"
+        />
+        <TextField
+          name="password"
+          label="Enter Password"
+          type="password"
+          value={password}
+          onChange={onChange}
+          fullWidth
+          margin="dense"
+          color="inherit"
+        />
+        <Button
+          className={styles.submit}
+          onClick={onClick}
+          fullWidth
+          variant="contained"
+          color="primary"
+        >
+          Login
+        </Button>
       </Paper>
     </div>
   );
