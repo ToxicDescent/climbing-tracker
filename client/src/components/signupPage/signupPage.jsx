@@ -6,21 +6,29 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
-import { loginUser } from '../../api/user';
+import { createUser } from '../../api/user';
 
-import styles from './loginPage.css';
+import styles from './signupPage.css';
 
-const LoginPage = () => {
+const SignupPage = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const onChange = event => {
     switch (event.target.name) {
+      case 'name':
+        setName(event.target.value);
+        break;
       case 'email':
         setEmail(event.target.value);
         break;
       case 'password':
         setPassword(event.target.value);
+        break;
+      case 'confirmPassword':
+        setConfirmPassword(event.target.value);
         break;
       default:
         break;
@@ -28,18 +36,29 @@ const LoginPage = () => {
   };
 
   const onClick = () => {
-    loginUser(email, password);
+    createUser({ name, email, password, confirmPassword });
   };
 
   return (
-    <div className={styles.loginPage}>
+    <div className={styles.signupPage}>
       <Paper className={styles.paper}>
         <Avatar className={styles.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Login
+          Signup
         </Typography>
+        <TextField
+          name="name"
+          label="Name"
+          type="text"
+          value={name}
+          onChange={onChange}
+          autoFocus
+          fullWidth
+          margin="dense"
+          color="inherit"
+        />
         <TextField
           name="email"
           label="Email"
@@ -61,6 +80,16 @@ const LoginPage = () => {
           margin="dense"
           color="inherit"
         />
+        <TextField
+          name="confirmPassword"
+          label="Confirm password"
+          type="password"
+          value={confirmPassword}
+          onChange={onChange}
+          fullWidth
+          margin="dense"
+          color="inherit"
+        />
         <Button
           className={styles.submit}
           onClick={onClick}
@@ -68,11 +97,11 @@ const LoginPage = () => {
           variant="contained"
           color="primary"
         >
-          Login
+          Signup
         </Button>
       </Paper>
     </div>
   );
 };
 
-export default LoginPage;
+export default SignupPage;
