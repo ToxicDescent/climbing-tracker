@@ -65,7 +65,6 @@ const SignupPage = () => {
           type="text"
           value={email}
           onChange={onChange}
-          autoFocus
           fullWidth
           margin="dense"
           color="inherit"
