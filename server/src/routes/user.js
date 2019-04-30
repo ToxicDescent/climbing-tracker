@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import { wrapAsync } from '../middleware/wrapAsync';
 import { authenticateUser } from '../controllers/user';
+import { createError } from '../utility/createError';
 
 const router = Router();
 
@@ -15,9 +16,7 @@ router.post(
     if (authenticatedUser) {
       response.json(authenticatedUser);
     }
-    const error = new Error('Email or password is incorrect');
-    error.httpStatusCode = 400;
-    throw error;
+    throw createError('Email or password is incorrect', 400);
   })
 );
 

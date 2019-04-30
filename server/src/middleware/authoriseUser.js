@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 import { getUserById } from '../controllers/user';
+import { createError } from '../utility/createError';
 
 export const authoriseUser = (request, response, next) => {
   let token =
@@ -11,16 +12,12 @@ export const authoriseUser = (request, response, next) => {
   }
 
   if (!token) {
-    const error = new Error('No token provided');
-    error.httpStatusCode = 401;
-    return next(error);
+    return next(createError('No token provided', 401));
   }
 
   jwt.verify(token, 'this is a secure secret', (error, decoded) => {
     if (error) {
-      const error = new Error('Invalid token');
-      error.httpStatusCode = 400;
-      return next(error);
+      return next(createError('Invalid token', 400));
     }
     const user = getUserById(decoded.id);
     request.context = {

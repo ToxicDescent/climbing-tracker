@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { wrapAsync } from '../middleware/wrapAsync';
 import { getUserByEmail } from '../controllers/user';
 import { authoriseUser } from '../middleware/authoriseUser';
+import { createError } from '../utility/createError';
 
 const router = Router();
 
@@ -32,10 +33,7 @@ router.post(
       });
       return response.status(200);
     }
-
-    const error = new Error('User not found');
-    error.httpStatusCode = 401;
-    throw error;
+    throw createError('User not found', 401);
   })
 );
 
