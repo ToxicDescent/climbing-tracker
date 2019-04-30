@@ -17,7 +17,7 @@ export const apiRequest = (url, body) => {
     .then(response => {
       if (!response.ok) {
         throw new Error(
-          `Api request failed with: ${response.status}-${response.statusText}`
+          `Api request failed with: ${response.status} - ${response.statusText}`
         );
       }
       return response.json();

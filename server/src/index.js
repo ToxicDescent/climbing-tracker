@@ -4,6 +4,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import 'regenerator-runtime';
 
+import { errorHandler } from './middleware/errorHandler';
 import models, { connectDb } from './models';
 import routes from './routes';
 
@@ -16,6 +17,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/user', routes.user);
 app.use('/api/session', routes.session);
+
+app.use(errorHandler);
 
 const eraseDatabaseOnSync = true;
 
