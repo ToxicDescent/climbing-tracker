@@ -28,7 +28,7 @@ const LoginPage = () => {
   };
 
   const onClick = () => {
-    loginUser(email, password);
+    loginUser({ email, password });
   };
 
   return (
