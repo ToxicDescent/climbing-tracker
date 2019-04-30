@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
-import controllers from '../controllers';
+import { authenticateUser } from '../controllers/user';
 
 const router = Router();
 
 router.post('/login', async (request, response) => {
-  const authenticatedUser = await controllers.user.authenticate(
+  const authenticatedUser = await authenticateUser(
     request.body.email,
     request.body.password
   );

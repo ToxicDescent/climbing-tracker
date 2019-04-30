@@ -1,11 +1,12 @@
 import { Router } from 'express';
 
-import controllers from '../controllers';
+import { getUserByEmail } from '../controllers/user';
+import { authoriseUser } from '../middleware/authoriseUser';
 
 const router = Router();
 
-router.post('/', async (request, response) => {
-  const user = await controllers.user.getByEmail(request.body.email);
+router.post('/', authoriseUser, async (request, response) => {
+  const user = await getUserByEmail(request.body.email);
   if (user._id.equals(request.context.user._id)) {
     const session = await request.context.models.Session.create({
       location: request.body.session.location,

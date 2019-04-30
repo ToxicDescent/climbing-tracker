@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 
 import models from '../models';
 
-const authenticate = async (email, password) => {
+export const authenticateUser = async (email, password) => {
   const user = await models.User.findOne({ email });
   if (user && bcrypt.compareSync(password, user.hash)) {
     const { hash, ...userWithoutHash } = user.toObject();
@@ -15,19 +15,19 @@ const authenticate = async (email, password) => {
   }
 };
 
-const getAll = async () => {
+export const getAllUsers = async () => {
   return await models.User.find().select('-hash');
 };
 
-const getById = async id => {
+export const getUserById = async id => {
   return await models.User.findById(id).select('-hash');
 };
 
-const getByEmail = async email => {
+export const getUserByEmail = async email => {
   return await models.User.findOne({ email }).select('-hash');
 };
 
-const create = async userDetails => {
+export const createUser = async userDetails => {
   // validate
   if (await getByEmail(userDetails.email)) {
     throw 'Email is registered to a user';
@@ -44,7 +44,7 @@ const create = async userDetails => {
   await user.save();
 };
 
-const update = async (id, userDetails) => {
+export const updateUser = async (id, userDetails) => {
   const user = await getById(id);
 
   // validate
@@ -67,15 +67,6 @@ const update = async (id, userDetails) => {
   await user.save();
 };
 
-const _delete = async id => {
+const _deleteUser = async id => {
   await models.User.findByIdAndRemove(id);
-};
-
-export default {
-  authenticate,
-  getAll,
-  getById,
-  getByEmail,
-  create,
-  update
 };
