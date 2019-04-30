@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
-import { createUser } from '../../api/user';
+import { signupUser } from '../../api/user';
 
 import styles from './signupPage.css';
 
@@ -36,7 +36,7 @@ const SignupPage = () => {
   };
 
   const onClick = () => {
-    createUser({ name, email, password, confirmPassword });
+    signupUser({ name, email, password, confirmPassword });
   };
 
   return (

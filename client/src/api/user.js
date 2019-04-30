@@ -4,6 +4,6 @@ export const loginUser = userDetails => {
   return apiRequest('/api/user/login', userDetails);
 };
 
-export const createUser = userDetails => {
-  return apiRequest('/api/user/create', userDetails);
+export const signupUser = userDetails => {
+  return apiRequest('/api/user/signup', userDetails);
 };
