@@ -19,7 +19,7 @@ export const authoriseUser = (request, response, next) => {
     if (error) {
       return next(createError('Invalid token', 400));
     }
-    const user = getUserById(decoded.id);
+    const user = getUserById(decoded.userId);
     request.context = {
       models,
       user

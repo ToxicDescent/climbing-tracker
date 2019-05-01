@@ -18,46 +18,38 @@ const getUserByEmailWithHash = async email => {
 router.post(
   '/login',
   wrapAsync(async (request, response) => {
-    // find user via email
-    const userWithHash = await getUserByEmailWithHash(request.body.email);
-    // validate password
-    if (
-      !userWithHash ||
-      !bcrypt.compareSync(request.body.password, userWithHash.hash)
-    ) {
+    const user = await getUserByEmailWithHash(request.body.email);
+    const authenticated = bcrypt.compareSync(request.body.password, user.hash);
+
+    if (!user || !authenticated) {
       throw createError('Email or password is incorrect', 400);
     }
-    const { hash, ...userWithoutHash } = userWithHash.toObject();
-    // create jwt
-    jwt.sign(
-      { sub: userWithHash.id },
-      'this is a secure secret',
-      (error, token) => {
-        if (error) {
-          throw createError('Failed to sign token', 400);
-        }
-        response.json({ ...userWithoutHash, token });
+
+    jwt.sign({ userId: user.id }, 'this is a secure secret', (error, token) => {
+      if (error) {
+        throw createError('Failed to sign token', 400);
       }
-    );
+      response.json({ name: user.name, token });
+    });
   })
 );
 
 router.post(
   '/signup',
   wrapAsync(async (request, response) => {
-    // validate doesn't exist
     if (await getUserByEmail(request.body.email)) {
       throw createError(
         `Email (${request.body.email}) is registered to another user`,
         400
       );
     }
+
     const user = new models.User(request.body);
-    // hash password
+
     if (request.body.password) {
       user.hash = bcrypt.hashSync(request.body.password, 10);
     }
-    // save user
+
     await user.save();
   })
 );
