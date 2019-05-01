@@ -1,9 +1,23 @@
 import { apiRequest } from './api';
 
 export const loginUser = userDetails => {
-  return apiRequest('/api/user/login', userDetails);
+  apiRequest('/api/user/login', userDetails)
+    .then(result => {
+      return result;
+    })
+    .catch(error => {
+      console.error(error);
+      return null;
+    });
 };
 
 export const signupUser = userDetails => {
-  return apiRequest('/api/user/signup', userDetails);
+  apiRequest('/api/user/signup', userDetails)
+    .then(result => {
+      return result;
+    })
+    .catch(error => {
+      console.error(error);
+      return null;
+    });
 };

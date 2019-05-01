@@ -13,15 +13,12 @@ export const apiRequest = (url, body) => {
     redirect: 'follow', // manual, *follow, error
     referrer: 'no-referrer', // no-referrer, *client
     body: JSON.stringify(body)
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(
-          `Api request failed with: ${response.status} - ${response.statusText}`
-        );
-      }
-      return response.json();
-    })
-    .then(json => json)
-    .catch(error => console.error(error));
+  }).then(response => {
+    if (!response.ok) {
+      throw new Error(
+        `Api request failed with: ${response.status} - ${response.statusText}`
+      );
+    }
+    return response.json();
+  });
 };

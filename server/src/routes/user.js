@@ -29,7 +29,12 @@ router.post(
       if (error) {
         throw createError('Failed to sign token', 400);
       }
-      response.json({ name: user.name, token });
+      response
+        .cookie('userToken', token, {
+          httpOnly: true,
+          maxAge: 1000 * 60 * 60 * 24
+        })
+        .json({ name: user.name });
     });
   })
 );
