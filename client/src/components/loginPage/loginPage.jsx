@@ -6,13 +6,14 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
-import { loginUser } from '../../api/user';
+import usePostRequest from '../../hooks/usePostRequest';
 
 import styles from './loginPage.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [response, setBody] = usePostRequest('/api/user/login');
 
   const onChange = event => {
     switch (event.target.name) {
@@ -28,7 +29,8 @@ const LoginPage = () => {
   };
 
   const onClick = () => {
-    loginUser({ email, password });
+    setBody({ email, password });
+    console.error(response);
   };
 
   return (
