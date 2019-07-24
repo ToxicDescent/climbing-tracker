@@ -13,7 +13,7 @@ import styles from './loginPage.css';
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [response, setBody] = usePostRequest('/api/user/login');
+  const [response, setBody] = usePostRequest('/api/user/login', false);
 
   const onChange = event => {
     switch (event.target.name) {

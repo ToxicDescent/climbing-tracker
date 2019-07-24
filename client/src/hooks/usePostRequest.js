@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect, useReducer, useRef } from 'react';
 import axios from 'axios';
 
 import { getServerUrl } from '../environment/environment';
@@ -6,7 +6,7 @@ import { getServerUrl } from '../environment/environment';
 const responseReducer = (state, action) => {
   switch (action.type) {
     case 'POST_REQUEST':
-      return { ...state, isLoading: true };
+      return { ...state, isLoading: true, data: null, error: null };
     case 'POST_REQUEST_SUCCESS':
       return { ...state, isLoading: false, data: action.data };
     case 'POST_REQUEST_FAILURE':
@@ -16,13 +16,14 @@ const responseReducer = (state, action) => {
   }
 };
 
-const usePostRequest = (url) => {
+const usePostRequest = (url, requestOnLoad = false) => {
   const [body, setBody] = useState(null);
   const [state, dispatch] = useReducer(responseReducer, {
     isLoading: false,
     data: null,
     error: null
   });
+  const isFirstRun = useRef(true);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -42,7 +43,15 @@ const usePostRequest = (url) => {
         });
     };
 
-    fetchData();
+    if (isFirstRun.current && requestOnLoad) {
+      fetchData();
+    } else if (!isFirstRun.current) {
+      fetchData();
+    }
+
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+    }
 
     return () => {
       source.cancel();
